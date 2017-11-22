@@ -1,0 +1,22 @@
+div:nth-of-type(1) {
+/*background-color: #A5F883;*/
+	max-width:700px;
+}
+
+.life-container {
+	background: #3FA0E1;
+	padding: .5em;
+	font-weight: bold;
+	cursor: pointer;
+	display: inline-block;
+	margin-left: 10px;
+}
+
+
+input[type="search"] {
+	box-shadow: 10px 10px 5px #888888;
+	border-style: solid;
+	border-width: thin;
+	border-color: grey;
+	text-indent: 30px;
+}

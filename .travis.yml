@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+- "stable"
+install:
+  - npm install
+  - node_modules/protractor/bin/webdriver-manager update
+script:
+  - ng test --watch=false
+  - ng e2e
