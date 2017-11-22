@@ -1,0 +1,22 @@
+On récupère le projet avec 
+git clone https://github.com/hkarom/Vide-frigo.git
+
+Ensuite :
+cd Vide-frigo
+
+npm update & npm install
+
+Puis on créé un fichier .env à la racine (Vide-frigo/) qui contiendra :
+
+NODE_PORT=...
+DB_SERVER_HOST=...
+DB_SERVER_USER=...
+DB_SERVER_PASSWORD=...
+DB_NAME=...
+
+On oublie pas de lancer sa base de donnée sinon pas de connexion.
+
+Enfin :
+node src/api/server.js
+ng serve
+ 

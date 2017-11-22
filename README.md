@@ -1,27 +1,17 @@
-# VideFrigo
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# vide-frigo
+Projet dans le cadre de l'UE Programmation Web, Master 2 Génie logiciel - Université de Bordeaux
+Liens diapo: https://www.canva.com/design/DACmXuYCFcU/3Y_mCYGGZaQMD_ogoVDZjA/view?utm_content=DACmXuYCFcU&utm_campaign=designshare&utm_medium=link=utm_source=sharebutton
+## user stories
+| Id | Description | Difficulté | Priorité/Sprint | Fait |
+|---:|:---|:---:|:---:|:---:|
+| 1 | En tant qu'**utilisateur**, je veux pouvoir effectuer une recherche de recettes en fonction des ingrédients et du type de plat | 3 | 1 | ✗ |
+| 2 | En tant qu'**utilisateur**, je veux pouvoir trier le résultat de la recherche (avis, nb ingrédients, date d'ajout, difficulté) | 3 | 3 | ✗ |
+| 3 | En tant qu'**utilisateur**, je veux pouvoir créer un profil (login, passwd, âge, photo(opt)) | 2 | 1 | ✗ |
+| 4 | En tant que **membre**, je veux pouvoir noter une recette | 1 | 1 | ✗ |
+| 5 | En tant que **membre**, je veux pouvoir poster un commentaire sur une recette | 2 | 3 | ✗ |
+| 6 | En tant que **membre**, je veux pouvoir ajouter des recettes (nom, ingredients, temps de préparation+cuisson, étapes, catégorie, difficulté, photo(opt)) | 3 | 2 | ✗ |
+| 7 | En tant qu' **utilisateur**, je souhaite pouvoir retrouver les recettes postées par un membre | 2 | 3 | ✗ |
+| 8 | En tant que **membre**, je veux pouvoir enregistrer mes recettes favoris | 3 | 1 | ✗ |
+| 9 | En tant que **utilisateur**, je veux pouvoir visualiser ("obtenir les propriétés") une recette | 2 | 1 | ✗ |
+| 10 | En tant que **utilisateur**, je veux pouvoir visualiser ("obtenir les propriétés") le profil d'un membre | 2 | 2 | ✗ |
+| 11 | En tant que **utilisateur**, je veux pouvoir me connecter en utilisant mon adresse mail et mon mot de passe | 5 | 2 | ✗ |
