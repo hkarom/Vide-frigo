@@ -31,7 +31,11 @@ SELECT * FROM avis WHERE id_user = 'varmembre';
 
 /**UPDATE**/
 UPDATE users SET login="", password="",age="",apropos="",photo="" WHERE id_user="id_us";
+<<<<<<< HEAD
 UPDATE recettes SET nom_recette="", description_recette="", photo_recette="", temps_cuisson="", temps_prepa="", etapes="", catégorie,id_user="" WHERE id_recette="id_rec";
+=======
+UPDATE recettes SET nom_recette="", description_recette="", photo_recette, temps_cuisson="", temps_prepa="", etapes="", catégorie,id_user="" WHERE id_recette="id_rec";
+>>>>>>> e68fe68dd9188c4840d99c7c94adc08066f66189
 UPDATE avis SET message="", etoile="" WHERE id_avis="id_av";
 UPDATE ingredients SET nom_ingredient="" WHERE id_ingredient="id_ing";
 

@@ -1,4 +1,4 @@
-On récupère le projet avec 
+On récupère le projet avec
 git clone https://github.com/hkarom/Vide-frigo.git
 
 Ensuite :
@@ -17,6 +17,4 @@ DB_NAME=...
 On oublie pas de lancer sa base de donnée sinon pas de connexion.
 
 Enfin :
-node src/api/server.js
-ng serve
- 
+npm run dev
