@@ -1,17 +1,46 @@
 let express = require('express');
-let bd = require('./db');
+let db = require('./db');
 let router = express.Router();
 
 
 
+function checkUndefinedObject(object, fields) {
+	let ok = true;
+	for (let field in fields) {
+		if (object[fields[field]] === undefined)
+			ok = false;
+	}
+	return ok;
+}
+
+
+function sendError(res, reason) {
+	res.status(400).send({
+		error: true,
+		reason: reason
+	});
+	console.log(reason);
+}
 
 router.post('/ingredients', (req, res) => {
-	res.setHeader('Content-Type', 'application/json');
-		bd.query('SELECT * FROM Ingredients  ....',[req.body.ingredient], (err,result) => {
-				if(err) throw err;
-				console.log(result);
+	res.contentType('application/json');
+	if (checkUndefinedObject(req.body, ['search'])) {
+		db.query("SELECT name FROM Ingredient WHERE name LIKE ? ", '%' + req.body.search + '%', (err, result) => {
+			if (err) throw err;
+			else {
+				let ingredients = [];
+				for (let i = 0; i < result.length; i++) {
+					ingredients.push({
+						search: result[i]['name']
+					});
+				}
+				res.status(200).send(ingredients);
+			}
 		})
-	}
-		//res.send(200, JSON.stringify(values));
-	}
+	} else
+		sendError(res, 'Error: required parameters not set');
+
 });
+
+
+module.exports = router;
