@@ -1,0 +1,30 @@
+version: "2.3"
+
+services:
+  database: # by default, expose 3306 port
+    image: mariadb:latest
+    restart: always
+    volumes:
+      - ./vide_frigo/initdb:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vide_frigo
+    ports:
+      - "3316:3306"
+  server:
+    build: ./vide_frigo
+    image: vfrigo:vide_frigo
+    volumes:
+      - ./vide_frigo:/home/node/app
+      - /home/node/app/node_modules
+    env_file:
+      - ./vide_frigo/.env
+    environment:
+      - NODE_ENV=development
+      - DB_SERVER_HOST=database
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    #command: ["./wait-for.sh", "database:3306", "-t", "30"]
+    init: true
