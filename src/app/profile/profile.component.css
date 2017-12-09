@@ -1,0 +1,36 @@
+
+.identity{
+	margin-top:2%;
+	margin-left:2%;
+	display: inline-block;
+	vertical-align:middle;
+}
+.about{
+	border-width: 2px 0px 2px 0px;
+	border-style : solid;
+	border-color: solid;
+	margin-top: 2%;
+	margin-left:10%;
+	padding-bottom:1%;
+	width:80%;
+	text-align:center;
+	background-color: #72D0AC;
+}
+
+#btns-profile{
+	margin-left:10%;
+	padding-bottom:1%;
+	width:80%;
+	text-align:center;
+}
+
+.buttons-profile{
+	padding-top:1%;
+	display:inline-block;
+	margin:2%;
+}
+
+.data{
+  text-transform: uppercase;
+  font-weight: bold;
+}
