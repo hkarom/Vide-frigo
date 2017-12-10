@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataService } from './data.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,10 +7,10 @@ import { DataService } from './data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Vide frigo';
 
-	constructor(private _dataService: DataService) {
-		this._dataService.display();
+	constructor() {
+
 	}
 
 }

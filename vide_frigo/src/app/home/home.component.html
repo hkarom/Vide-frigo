@@ -1,0 +1,35 @@
+<h2>VIDE - FRIGO</h2>
+
+<div class="row">
+	<div class="col">
+		<ul>
+			<li class="life-container" *ngFor="let g of goals">
+				{{g}}
+			</li>
+		</ul>
+	</div>
+
+	<div>
+		<form [formGroup]="ingredientForm" (keydown.ArrowUp)="onUp($event)" (keydown.ArrowDown)="onDown($event)" (submit)="ngOnSubmit()" novalidate>
+			<div class="input-field">
+				<input id="search" type="search" name="search" class="form-control" formControlName="search" placeholder="Type an igredient" autocomplete="off" required [ngClass]="{
+			'is-invalid': (ingredientForm.controls['search'].invalid && ingredientForm.controls['search'].touched),
+			'is-valid': ingredientForm.controls['search'].touched}">
+				<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+				<i class="material-icons">close</i>
+			</div>
+
+			<div class="collection" *ngIf="filteredList.length > 0">
+
+					<a *ngFor="let item of filteredList; index as i; first as isFirst" [class.active]="isFirst" class="collection-item" (click)="sendMe(i)"><strong>{{item.search}}</strong></a>
+			</div>
+
+
+
+
+
+			<input type="submit" class="btn" value="Add">
+		</form>
+	</div>
+
+</div>

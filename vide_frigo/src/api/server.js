@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 
 //inclusion du point d'entrée pour les routes
 //let api = require('./routes/api');
-app.use('/', api);
+app.use('/api', api);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // catch 404 and forward to error handler
 /*app.use(function(req, res, next) {
