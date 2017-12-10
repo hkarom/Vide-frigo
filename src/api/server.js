@@ -48,6 +48,7 @@ apis: [
 ]
 });
 
+var swaggerSpec = swaggerJSDoc(options);
 
 
 //inclusion du point d'entrée pour les routes
