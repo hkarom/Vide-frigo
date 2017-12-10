@@ -12,6 +12,7 @@ let http = require('http');
 var cors = require('cors');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./swagger.json');
+const swaggerJSDoc = require('swagger-jsdoc');
 
 let app = express();
 app.use(cors());
@@ -22,8 +23,32 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../dist')));
 
+//Mise en place de swaggerJSDoc
+const spec = swaggerJSDoc({
+	swaggerDefinition: {
+		info: {
+			title: 'Vide-Frigo',
+			version: '1.0.0'
+		},
+		produces: ['application/json'],
+		consumes: ['application/json'],
+		securityDefinitions: {
+			jwt: {
+			type: 'apiKey',
+			name: 'Authorization',
+			in: 'header'
+		}
+	},
+	security: [
+		{ jwt: []}
+	]
+},
+apis: [
+	'./routes/*.js'
+]
+});
 
-
+var swaggerSpec = swaggerJSDoc(options);
 
 
 //inclusion du point d'entrée pour les routes
