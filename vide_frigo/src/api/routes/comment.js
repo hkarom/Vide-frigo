@@ -31,9 +31,23 @@ function treatment(err, response, values,  rows) {
 router.get('/comment/:recipeID', (req, res) => {
 	bd.query('SELECT * FROM avis WHERE id_recette = ?',[req.params.recipeID], (err,cols) => {
 		let values = [];
+		console.log('request GET recipe');
     treatment(err,res,values,cols);
 	});
 });
+
+/**
+	*@swagger
+	* /comment
+	* post:
+	* 	description: Ajoute un commentaire dans la base de données
+	* 	tags:
+	*				- comment
+	*		produces:
+	*		- application/json
+	*		responses:
+	*		- description: recipes
+*/
 
 router.post('/comment/:userID/:recipeID', (req, res) => {
 	let values = [];
@@ -49,6 +63,19 @@ router.post('/comment/:userID/:recipeID', (req, res) => {
 	}
 });
 
+/**
+	*@swagger
+	* /comment
+	* patch:
+	* 	description: Edite un commentaire dans la base de données
+	* 	tags:
+	*				- comment
+	*		produces:
+	*		- application/json
+	*		responses:
+	*		- description: recipes
+*/
+
 
 router.patch('/comment/:userID/:recipeID/:commentID', (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
@@ -59,7 +86,18 @@ router.patch('/comment/:userID/:recipeID/:commentID', (req, res) => {
 					      treatment(err,res,values,"success");
 		});
 });
-
+/**
+	*@swagger
+	* /recipes
+	* delete:
+	* 	description: Supprime la recette associé à @id
+	* 	tags:
+	*				- Recipes
+	*		produces:
+	*		- application/json
+	*		responses:
+	*		- description: recipes
+*/
 router.delete('/comment/:userID/:recipeID/:commentID', (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 		bd.query('DELETE * FROM avis where id_user = ? AND id_recette = ? AND id_avis = ?',[req.params.userID, req.params.recipeID, req.params.commentID], (err,result) => {
@@ -70,3 +108,5 @@ router.delete('/comment/:userID/:recipeID/:commentID', (req, res) => {
 				}
 		});
 });
+
+module.exports  = router;

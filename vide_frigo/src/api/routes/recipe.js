@@ -32,7 +32,7 @@ function treatment(err, response, values,  rows) {
 router.get('/recipes/:userID', (req, res) => {
 		bd.query('SELECT * FROM Recipe WHERE id_user = ?',[req.params.userID], (err,cols) => {
 			let values = [];
-			treatment(err,res,values,cols)
+			treatment(err,res,values,cols);
 		})
 });
 
@@ -107,7 +107,6 @@ router.patch('/recipe/:id', (req, res) => {
 */
 
 router.delete('/recipe/:id', (req, res) => {
-	res.setHeader('Content-Type', 'application/json');
 		bd.query('DELETE FROM Recipe WHERE id = ?',[req.params.id], (err,result) => {
 				if(err) throw err;
 				else {
@@ -116,3 +115,5 @@ router.delete('/recipe/:id', (req, res) => {
 				}
 		});
 });
+
+module.exports  = router;

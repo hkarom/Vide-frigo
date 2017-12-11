@@ -1,12 +1,16 @@
 let express = require('express');
 let cors = require('cors');
 
+
+
 let db = require('./db');
 let login = require('./login');
 let ingredient = require('./ingredient');
 
 let router = express.Router();
 router.use(cors());
+
+
 
 router.get('/', (req, res, next) => {
 	//console.log("Entrée ici");
@@ -15,6 +19,7 @@ router.get('/', (req, res, next) => {
   //res.sendFile(path.join(__dirname,'/../index.html'));
 
 });
+
 
 
 router.get('/swagger.json', function(req,res){
