@@ -1,22 +1,30 @@
-<h2>Login</h2>
-
-<div class="row">
-	<form class="col s12">
+<div class="card-panel lime lighten-5 brown-text" align="center">
+	<h3 class="header">Login</h3>
+</div>
+<div class="container row">
+	<form class="col s12 form-login" [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
 		<div class="row">
 			<div class="input-field col s12">
-				<input id="username" type="text" class="validate">
+				<i class="material-icons prefix">account_circle</i>
+				<input id="username" type="text" class="validate form-control" formControlName="username" required autofocus [ngClass]="{
+					'is-invalid': (loginForm.controls['username'].invalid && loginForm.controls['username'].touched),
+					'is-valid': loginForm.controls['username'].touched}">
 				<label for="username">Username</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s12">
-				<input id="password" type="password" class="validate">
+				<i class="material-icons prefix">lock_outline</i>
+				<input id="password" type="password" class="form-control validate" formControlName="password"
+					required type="password" [ngClass]="{
+						'is-invalid': (loginForm.controls['password'].invalid && loginForm.controls['password'].touched),
+						'is-valid': loginForm.controls['password'].touched}" >
 				<label for="password">Password</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s6">
-				<input type="submit" class="btn" value="Login">
+				<input type="submit" class="btn" value="Login" [disabled]="loginForm.invalid">
 			</div>
 		</div>
 	</form>

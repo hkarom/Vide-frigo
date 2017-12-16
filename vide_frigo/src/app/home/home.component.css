@@ -1,9 +1,20 @@
-div:nth-of-type(1) {
+div.container{
 
-	max-width:700px;
+	max-width:800px;
+	margin-top:10px;
 }
 
-.life-container {
+div.container form {
+margin-top: 100px;
+}
+
+div.results {
+	margin-left: 0;
+	position:fixed;
+
+}
+
+/*.life-container {
 	background: #3FA0E1;
 	border-radius: 30px 30px 30px 30px;
 	padding: .5em;
@@ -21,10 +32,44 @@ input[type="search"] {
 	border-width: thin;
 	border-color: grey;
 	text-indent: 30px;
+}*/
+
+div#checkboxes {
+	margin-bottom:20px;
 }
 
+div#checkboxes span {
+	margin-right:20px;
+}
 
-form div.collection {
+#ingredientsSelected {
+	margin-top : 70px;
+}
+
+div.collection {
+	margin-top:0;
   overflow: auto;
-  max-height: 500px;
+  min-height: 830px;
+	max-height: 830px;
+	border-style: none;
+	border-right-style: solid;
+}
+
+div.collection a {
+	cursor: pointer;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
 }

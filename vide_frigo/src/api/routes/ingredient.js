@@ -3,7 +3,6 @@ let db = require('./db');
 let router = express.Router();
 
 
-
 function checkUndefinedObject(object, fields) {
 	let ok = true;
 	for (let field in fields) {
@@ -22,6 +21,7 @@ function sendError(res, reason) {
 	console.log(reason);
 }
 
+
 router.post('/ingredients', (req, res) => {
 	res.contentType('application/json');
 	if (checkUndefinedObject(req.body, ['search'])) {
@@ -39,6 +39,25 @@ router.post('/ingredients', (req, res) => {
 		})
 	} else
 		sendError(res, 'Error: required parameters not set');
+
+});
+
+
+router.get('/ingredients', (req, res) => {
+	res.contentType('application/json');
+		db.query("SELECT name FROM Ingredient", (err, result) => {
+			if (err) throw err;
+			else {
+				let ingredients = [];
+				for (let i = 0; i < result.length; i++) {
+					ingredients.push({
+						search: result[i]['name']
+					});
+				}
+				res.status(200).send(ingredients);
+			}
+		})
+
 
 });
 
