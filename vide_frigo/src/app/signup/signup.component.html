@@ -1,50 +1,69 @@
-<h2 class="header">Register form</h2>
 
-<div class="row">
-	<form class="col s12">
+ <div class="card-panel lime lighten-5 brown-text" align="center">
+	 <h3 class="header">Register form</h3>
+ </div>
+
+<div class="container row">
+	<form class="col s12" [formGroup]='registerForm' (ngSubmit)="ngOnSubmit()" novalidate>
 		<div class="row">
-			<div class="input-field col s6">
-				<input id="username" type="text" class="validate">
+			<div class="input-field col s12">
+				<i class="material-icons prefix">account_circle</i>
+				<input id="username" type="text" class="validate form-control" formControlName="username" required autofocus [ngClass]="{
+					'is-invalid': (registerForm.controls['username'].invalid && registerForm.controls['username'].touched),
+					'is-valid': registerForm.controls['username'].touched}">
 				<label for="username">Username</label>
-			</div>
-			<div class="input-field col s6">
-				<input id="last_name" type="number" class="validate">
-				<label for="last_name">Age</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s12">
-				<input id="email" type="email" class="validate">
+
+      <i class="material-icons prefix">mail_outline</i>
+				<input id="email" type="email" class="validate form-control" formControlName="email" required autofocus [ngClass]="{
+		 'is-invalid': (registerForm.controls['email'].invalid && registerForm.controls['email'].touched),
+		 'is-valid': registerForm.controls['email'].touched}">
 				<label for="email">Email</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s6">
-				<input id="password" type="password" class="validate">
+				<i class="material-icons prefix">lock_outline</i>
+				<input id="password" type="password" class="validate form-control" formControlName="password" required [ngClass]="{
+		 'is-invalid': (registerForm.controls['password'].invalid && registerForm.controls['password'].touched),
+		 'is-valid': registerForm.controls['password'].touched}">
 				<label for="password">Password</label>
 			</div>
 			<div class="input-field col s6">
-				<input id="password" type="password" class="validate">
+				<input id="confirmPassword" type="password" class="validate form-control" formControlName="confirmPassword" required
+				[ngClass]="{
+		 'is-invalid': (registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].touched),
+		 'is-valid': registerForm.controls['confirmPassword'].touched}">
 				<label for="password">Confirm password</label>
 			</div>
 		</div>
+
 		<div class="row">
-			<label>Input image</label>
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea" formControlName="description"></textarea>
+          <label for="textarea1">Description</label>
+        </div>
+      </div>
+
+		<div class="row">
 			<div class="file-field input-field">
 				<div class="btn">
 					<span>Image</span>
-					<input type="file" />
+					<input id="picture" #fileInput type="file" name="picture" class="validate form-control" accept="image/*"  (change)="addFile()"/>
 				</div>
 
 				<div class="file-path-wrapper">
-					<input class="file-path validate" type="text" placeholder="Upload profile image" />
+					<input class="file-path validate" type="text" placeholder="Upload profile image : size max 300*300" />
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s6">
-				<input type="submit" class="btn" value="Register">
-				<input type="submit" class="btn" value="Back">
+				<button class="btn" type="submit"
+						[disabled]="registerForm.invalid">Sign in</button>
 			</div>
 		</div>
 	</form>

@@ -5,15 +5,15 @@ CREATE TABLE User (
   id bigint(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   login varchar(50) NOT NULL,
   password varchar(512) NOT NULL,
-  description varchar(1000) NOT NULL,
-  photo BLOB NOT NULL,
+  email		VARCHAR(100)	NOT NULL,
+  description VARCHAR(1000),
+  photo VARCHAR(512),
 	UNIQUE (login)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 
 CREATE TABLE Ingredient (
-  id bigint(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  name varchar(50) NOT NULL
+  name varchar(50) NOT NULL PRIMARY KEY
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 
@@ -21,7 +21,7 @@ CREATE TABLE Recipe (
   id bigint(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	id_creator bigint(20) NOT NULL,
   name varchar(100) NOT NULL,
-  picture BLOB NOT NULL,
+  picture VARCHAR(512) NOT NULL,
   cooking_time time NOT NULL,
   preparation_time time NOT NULL,
   steps varchar(2000) NOT NULL,
@@ -44,10 +44,10 @@ CREATE TABLE Comment (
 
 CREATE TABLE Recipe_Ing (
   id_recipe bigint(20),
-  id_ingredient bigint(20),
+  name_ing VARCHAR(50),
 	FOREIGN KEY (id_recipe) REFERENCES Recipe(id) ON DELETE CASCADE,
-	FOREIGN KEY (id_ingredient) REFERENCES Ingredient(id),
-	PRIMARY KEY (id_recipe, id_ingredient)
+	FOREIGN KEY (name_ing) REFERENCES Ingredient(name),
+	PRIMARY KEY (id_recipe, name_ing)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
 

@@ -6,7 +6,8 @@
     "module": "es2015",
     "types": [
 			"jquery",
-      "materialize-css"
+      "materialize-css",
+      "mcustomscrollbar"
 		]
   },
   "exclude": [
