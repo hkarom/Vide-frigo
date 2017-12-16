@@ -1,12 +1,16 @@
 let express = require('express');
 let cors = require('cors');
 
+
+
 let db = require('./db');
 let login = require('./login');
 let ingredient = require('./ingredient');
 
 let router = express.Router();
 router.use(cors());
+
+
 
 router.get('/', (req, res, next) => {
 	//console.log("Entrée ici");
@@ -18,8 +22,15 @@ router.get('/', (req, res, next) => {
 
 
 
+router.get('/swagger.json', function(req,res){
+	res.setHeader('Content-Type', 'application/json');
+	res.send(swaggerSpec);
+});
+
 db.connect(err => {
-	if (err) throw err;
+	if (err){
+		throw err;
+	}
 	else {
 		console.log('Connected to the database');
 		router.use(ingredient);
