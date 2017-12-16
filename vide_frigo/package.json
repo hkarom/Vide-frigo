@@ -4,11 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "dev": "node src/api/server & ng serve",
-    "docker-dev": "node_modules/pm2/bin/pm2-dev start src/api/server.js & ng serve --host 0.0.0.0",
-    "start": "ng build & node src/api/server",
+	"start": "ng build & node src/api/server",
     "build": "ng build",
-    "test": "mocha --exit",
+    "test": "ng build & ng e2e --no-serve",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
