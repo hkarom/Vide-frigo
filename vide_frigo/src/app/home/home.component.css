@@ -1,17 +1,16 @@
-div.container{
-
-	max-width:800px;
-	margin-top:10px;
-}
-
 div.container form {
 margin-top: 100px;
 }
 
 div.results {
 	margin-left: 0;
-	position:fixed;
+	margin-top:0%;
+	width : 15%;
+	position : absolute;
+}
 
+div.page{
+	margin-left: 16%;
 }
 
 /*.life-container {
@@ -49,7 +48,7 @@ div#checkboxes span {
 div.collection {
 	margin-top:0;
   overflow: auto;
-  min-height: 830px;
+  min-height: 500px;
 	max-height: 830px;
 	border-style: none;
 	border-right-style: solid;
@@ -72,4 +71,21 @@ div.collection a {
 .rating > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
+}
+
+.images{
+	font-size: 150%;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	overflow: hidden;
+}
+
+.parallax-container {
+      height: 350px;
+			margin-left: auto;
+			margin-right: auto;
 }

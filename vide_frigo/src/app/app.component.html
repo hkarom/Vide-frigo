@@ -1,17 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-	<nav class="lime lighten-4">
+	<nav class="waves-effect waves-light teal">
 	    <div class="nav-wrapper">
-	      <a class="brand-logo right brown-text" routerLink="#">Vide Frigo</a>
+	      <a class="brand-logo right" routerLink="#">Vide Frigo</a>
 	      <!--<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      --><ul class="left hide-on-med-and-down">
-	        <li><a routerLink="#" class="brown-text">Home</a></li>
-	        <li *ngIf='!auth.isLoggedIn()'><a routerLink="login" class="brown-text">Login</a></li>
-					<li *ngIf='auth.isLoggedIn()'><a class="brown-text" (click)='logout()'>Sign out</a></li>
-	        <li *ngIf='!auth.isLoggedIn()'><a routerLink="signup" class="brown-text">Register</a></li>
-					<li *ngIf='auth.isLoggedIn()'><a routerLink="profile" class="brown-text">Profile</a></li>
+	        <li><a routerLink="#">Home</a></li>
+	        <li *ngIf='!auth.isLoggedIn()'><a routerLink="login">Login</a></li>
+					<li *ngIf='auth.isLoggedIn()'><a (click)='logout()'>Sign out</a></li>
+	        <li *ngIf='!auth.isLoggedIn()'><a routerLink="signup">Register</a></li>
+					<li *ngIf='auth.isLoggedIn()'><a routerLink="profile">Profile</a></li>
 					<li  *ngIf='auth.isLoggedIn()'>
-						<a class="brown-text">Welcome {{userName()}} !</a>
+						<a>Welcome {{userName()}} !</a>
 					</li>
 	      </ul>
 	    </div>
