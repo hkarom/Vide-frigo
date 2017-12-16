@@ -5,20 +5,23 @@ public class Main {
 	
 	public static void addRecipe(Recipe r, Connection conn) {
 		// the mysql insert statement
-	      String query = " insert into Recipe (id_creator, name, picture, cooking_time, steps, category)"
-	        + " values (?, ?, ?, ?, ?,?)";
-
+	      String query = " insert into Recipe (id_creator, name, cooking_time, steps, category)"
+	        + " values (?, ?, ?, ?,?)";
+	      try {
 	      // create the mysql insert preparedstatement
 	      PreparedStatement preparedStmt = conn.prepareStatement(query);
 	      preparedStmt.setInt (1, 0);
 	      preparedStmt.setString (2, r.getName());
-	      preparedStmt.setBlob(3, new Blob()); 
 	      preparedStmt.setInt(4, Integer.parseInt(r.getPrepTime()));
 	      preparedStmt.setString (5, r.getDetail());
 	      preparedStmt.setString(6, "STARTER");
 
 	      // execute the preparedstatement
 	      preparedStmt.execute();
+	      }
+	      catch(Exception e) {
+	    	  System.err.println(e.getMessage());
+	      }
 	}
 	
 	public static void main() {
