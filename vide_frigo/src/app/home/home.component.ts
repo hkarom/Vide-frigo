@@ -1,7 +1,11 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Injectable, Inject, Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { CommonService } from '../services/common.service';
+//import { MatDrawerContent, MatDrawer } from '@angular/material';
 
+declare var jquery: any;
+declare var $: any;
 
 const ingredientsUrl = 'http://localhost:3000/api/ingredients';
 
@@ -12,57 +16,82 @@ const ingredientsUrl = 'http://localhost:3000/api/ingredients';
 })
 export class HomeComponent implements OnInit {
 
+  public scrollbarOptions = { axis: 'y', theme: 'dark-thin', scrollButtons: { enable: true } };
   private ingredientForm: FormGroup;
   private filteredList = [];
-  private ingredientSelected = { search: '' };
+  private nameTypes = [['Starter', true], ['Dish', true], ['Dessert', true]];
+  private searchForcus = false;
+  ingredientsList = [];
 
-  cpt: number;
-  goal: string = "eau";
-  goals = [];
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private el: ElementRef,
+    private se: CommonService
   ) {
     this.ingredientForm = this.fb.group({
       search: [null, [Validators.required]],
     });
 
+    this.resetList().subscribe(data => { this.filteredList = data; });
     this.ingredientForm.valueChanges.subscribe(data => {
       if (data !== '') {
         this.http.post(ingredientsUrl, data).subscribe((value: any) => {
-
           if (value.error) {
             console.log(value.error);
           } else {
             this.filteredList = value;
-            console.log(this.filteredList );
+            console.log(this.filteredList);
           }
         }, error => console.log(error));
       }
     });
-
-
   }
 
   ngOnInit() {
+    this.se.add_subject.subscribe(response => {
+      this.filteredList = this.se.filteredList
+    })
+
+    $(".button-collapse").sideNav({
+      menuWidth: 400,
+      edge: 'right',
+    });
   }
 
-  ngOnSubmit() {
 
+  ngOnSubmit() {
     const selectElement = this.el.nativeElement.querySelector('.collection .active');
     console.log(selectElement);
     if (selectElement !== null) selectElement.click();
 
   }
 
+  checkMe(index) {
+    this.nameTypes[index][1] = !this.nameTypes[index][1];
+    this.nameTypes[index][1] == true ?
+    this.el.nativeElement.querySelectorAll('input[type=checkbox]')[index].setAttribute('checked', 'checked') :
+    this.el.nativeElement.querySelectorAll('input[type=checkbox]')[index].removeAttribute('checked');
+  }
+
+  searchOnFocus() {
+    return this.searchForcus;
+  }
+
 
   sendMe(index) {
-    this.ingredientSelected = this.filteredList[index];
-    this.el.nativeElement.querySelector('#search').value = '';
-    this.filteredList = [];
-    this.goals.push(this.ingredientSelected.search);
+    if (this.ingredientsList.length < 15) {
+      if (this.ingredientsList.indexOf(this.filteredList[index].search) == -1) {
+        this.el.nativeElement.querySelector('#search').value = '';
+        this.resetList();
+        this.ingredientsList.push(this.filteredList[index].search);
+      }
+    }
+  }
+
+  removeMe(element) {
+    this.ingredientsList.splice(this.ingredientsList.indexOf(element), 1);
   }
 
   onUp(event: KeyboardEvent) {
@@ -73,7 +102,9 @@ export class HomeComponent implements OnInit {
         list.classList.add('active');
       } else {
         list.classList.remove('active');
-        if (list.previousSibling.classList !== undefined) list.previousSibling.classList.add('active');
+        if (list.previousSibling.classList !== undefined) {
+          list.previousSibling.classList.add('active');
+        }
       }
     }
   }
@@ -88,9 +119,22 @@ export class HomeComponent implements OnInit {
       }
       else {
         list.classList.remove('active');
-        if (list.nextSibling.classList !== undefined) list.nextSibling.classList.add('active');
+        if (list.nextSibling.classList !== undefined) {
+          list.nextSibling.classList.add('active');
+        }
       }
     }
   }
+
+  resetList() {
+    return this.http.get(ingredientsUrl).map((value: any) => {
+      if (value.error) {
+        console.log(value.error);
+      } else {
+        return value;
+      }
+    }, error => console.log(error));
+  }
+
 
 }

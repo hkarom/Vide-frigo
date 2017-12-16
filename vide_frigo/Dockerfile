@@ -18,4 +18,6 @@ COPY . /home/node/app
 
 EXPOSE 3000
 
-CMD ["./wait-for-it.sh", "database:3306", "-t", "40", "--", "npm", "run", "docker-dev"]
+CMD ["./wait-for-it.sh", "db:3306", "-t", "40", "--", "npm", "run", "docker-dev"]
+
+EXPOSE 4200
