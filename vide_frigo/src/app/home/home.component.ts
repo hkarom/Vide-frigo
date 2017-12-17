@@ -55,11 +55,12 @@ export class HomeComponent implements OnInit {
 
 
   searchRecipes() {
+    this.pageContent.remove();
     const resultsComponentFactory = this.cfr.resolveComponentFactory(SearchResultsComponent);
-    this.http.get<Recipe[]>(recipesUrl).subscribe((results) => {
+  //  this.http.get<Recipe[]>(recipesUrl).subscribe((results) => {
       const resultsFactory = this.pageContent.createComponent(resultsComponentFactory);
-      resultsFactory.instance.recipeList = results;
-    });
+      //resultsFactory.instance.recipeList = results;
+    //});
   }
 
 

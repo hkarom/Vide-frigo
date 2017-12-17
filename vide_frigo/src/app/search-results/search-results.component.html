@@ -1,3 +1,38 @@
-<p>
-  search-results works!
-</p>
+<div class="container">
+
+  <div class="results">
+    <div class="collection">
+      <div class="center-align red-text" *ngIf="recipeList.length == 0">
+        <span>Sorry, but no recipe were found with the specified filters</span>
+      </div>
+
+
+
+
+        <div class="col s12 m7" *ngFor="let item of recipeList; index as i; first as isFirst">
+          <h2 class="header">Horizontal Card</h2>
+          <div class="card horizontal">
+            <div class="card-image">
+              <img src="https://lorempixel.com/100/190/nature/6">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                  <a  id="R{{i}}" class="collection-item"><strong>contenu</strong></a>
+                <p>I am a very simple card. I am good at containing small bits of information.</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+  </div>
+  </div>
+
+
+</div>
