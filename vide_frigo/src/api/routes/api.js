@@ -51,7 +51,7 @@ router.post('/upload', function(req, res) {
     console.log('ERROR');
   });
 
-
+});
 
 router.get('/swagger.json', function(req,res){
 	res.setHeader('Content-Type', 'application/json');

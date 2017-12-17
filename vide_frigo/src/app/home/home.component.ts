@@ -1,13 +1,14 @@
-import { Injectable, Inject, Component, OnInit, ElementRef } from '@angular/core';
+import { Injectable, Inject, Component, OnInit, ElementRef, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
+import { SearchResultsComponent } from '../search-results/search-results.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonService } from '../services/common.service';
-//import { MatDrawerContent, MatDrawer } from '@angular/material';
-
+import { Recipe } from '../objects/Recipe';
 declare var jquery: any;
 declare var $: any;
 
 const ingredientsUrl = 'http://localhost:3000/api/ingredients';
+const recipesUrl = 'http://localhost:3000/api/recipes';
 
 @Component({
   selector: 'app-home',
@@ -21,14 +22,17 @@ export class HomeComponent implements OnInit {
   private filteredList = [];
   private nameTypes = [['Starter', true], ['Dish', true], ['Dessert', true]];
   private searchForcus = false;
-  ingredientsList = [];
+  private ingredientsList = [];
 
+  @ViewChild('dynamicContent', { read: ViewContainerRef })
+  private pageContent: ViewContainerRef;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private el: ElementRef,
-    private se: CommonService
+    private se: CommonService,
+    private cfr: ComponentFactoryResolver
   ) {
     this.ingredientForm = this.fb.group({
       search: [null, [Validators.required]],
@@ -48,6 +52,18 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+
+  searchRecipes() {
+    const resultsComponentFactory = this.cfr.resolveComponentFactory(SearchResultsComponent);
+    this.http.get<Recipe[]>(recipesUrl).subscribe((results) => {
+      const resultsFactory = this.pageContent.createComponent(resultsComponentFactory);
+      resultsFactory.instance.recipeList = results;
+    });
+  }
+
+
+
 
   ngOnInit() {
     this.se.add_subject.subscribe(response => {
@@ -80,7 +96,9 @@ export class HomeComponent implements OnInit {
   }
 
 
-  sendMe(index) {
+  sendMe(index, element) {
+    element.target.classList.remove('teal-text');
+    element.target.classList.add('brown-text');
     if (this.ingredientsList.length < 15) {
       if (this.ingredientsList.indexOf(this.filteredList[index].search) == -1) {
         this.el.nativeElement.querySelector('#search').value = '';
@@ -91,6 +109,9 @@ export class HomeComponent implements OnInit {
   }
 
   removeMe(element) {
+    let index = this.filteredList.findIndex(ing => ing.search ===  element)
+    this.el.nativeElement.querySelector('#I'+index).classList.remove('brown-text');
+    this.el.nativeElement.querySelector('#I'+index).classList.add('teal-text');
     this.ingredientsList.splice(this.ingredientsList.indexOf(element), 1);
   }
 
