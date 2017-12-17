@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { User } from '../objects/User';
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +14,8 @@ export class ProfileComponent implements OnInit {
   age: number
   level: string
 
+  private user: User;
+
   constructor() { }
 
   ngOnInit() {
@@ -19,6 +23,41 @@ export class ProfileComponent implements OnInit {
     this.prenom = "Jean";
     this.age = 45;
     this.level = "Expert";
+    console.log('HO');
+console.log(localStorage.getItem('user.picture'));
+    this.user = new User(
+      Number(localStorage.getItem('user.id')),
+  		localStorage.getItem('user.username'),
+  		localStorage.getItem('user.email'),
+  		localStorage.getItem('user.description'),
+  		localStorage.getItem('user.picture')
+    )
+
+    $(".button-collapse").sideNav({
+      menuWidth: 400,
+      edge: 'right',
+    });
+  }
+
+  myPage() {
+
+  }
+
+
+  editInformations() {
+
+  }
+
+  postedRecipes() {
+
+  }
+
+  favoritesRecipes() {
+
+  }
+
+  postedComments() {
+
   }
 
 }

@@ -38,3 +38,17 @@ a {
   padding-right: 5px;
   padding-left: 5px;
 }
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  border-top: solid 1px #DDDDDD;
+}

@@ -1,5 +1,5 @@
 
-.identity{
+/*.identity{
 	margin-top:2%;
 	margin-left:2%;
 	display: inline-block;
@@ -33,4 +33,13 @@
 .data{
   text-transform: uppercase;
   font-weight: bold;
+}*/
+
+#slide-out li div.divider {
+	margin:0;
+}
+
+#slide-out li a {
+	margin:0;
+	height:60px;
 }

@@ -1,101 +1,117 @@
 <div class="row">
 
-	<div class="results col s2 m4 l3">
+	<div class="results">
 		<div malihu-scrollbar [scrollbarOptions]="scrollbarOptions" class="collection">
 			<div class="center-align red-text" *ngIf="filteredList.length == 0">
 				<span>No ingredients found</span>
 			</div>
-			<a *ngFor="let item of filteredList; index as i; first as isFirst" [class.active]="isFirst && searchOnFocus()" class="collection-item" (click)="sendMe(i)"><strong>{{item.search}}</strong></a>
+			<a *ngFor="let item of filteredList; index as i; first as isFirst" id="I{{i}}" [class.active]="isFirst && searchOnFocus()" class="collection-item" (click)="sendMe(i,$event)"><strong>{{item.search}}</strong></a>
 		</div>
 	</div>
 
-	<div class='container'>
-		<div class="center-align">
+
+	<div class="page">
+		<div class="parallax-container">
+			<div class="col" id="ingredientsSelected">
+				<ul class="list-inline">
+					<li class="life-container" *ngFor="let g of ingredientsList">
+						<div class="chip">{{g}} <i class="close material-icons" (click)="removeMe(g)">close</i></div>
+					</li>
+					<li *ngIf="ingredientsList.length == 15" class="red-text"><strong>Reached limit</strong></li>
+				</ul>
+			</div>
+			<div class='container'>
+				<!--<div class="center-align">
 			<img class="img-responsive " src="../assets/images/logo.png" alt="image" />
-		</div>
-		<form [formGroup]="ingredientForm" (keydown.ArrowUp)="onUp($event)" (keydown.ArrowDown)="onDown($event)" (submit)="ngOnSubmit()" novalidate>
-			<div class="col" id="checkboxes">
-				<span *ngFor="let type of nameTypes; index as i" (click)="checkMe(i)">
+		</div>-->
+				<form id="ingredientForm" [formGroup]="ingredientForm" (keydown.ArrowUp)="onUp($event)" (keydown.ArrowDown)="onDown($event)" (submit)="ngOnSubmit()" novalidate>
+					<div class="col" id="checkboxes">
+						<span *ngFor="let type of nameTypes; index as i" (click)="checkMe(i)">
 				<input  type="checkbox" class="filled-in" checked/>
-				<label for="filled-in-box">{{type[0]}}</label>
+				<label class="white-text" for="filled-in-box"><strong>{{type[0]}}</strong></label>
 			</span>
-				<button data-activates="slide-out" class="btn waves-effect waves-light brown button-collapse" type="button" name="action">
+						<button data-activates="slide-out" class="btn waves-effect waves-light white teal-text button-collapse" type="button" name="action">
 		More filters ...
 	</button>
-			</div>
+					</div>
 
-			<nav class='col grey lighten-5 '>
-				<div class="nav-wrapper">
-					<div class="input-field">
-						<input id="search" type="search" name="search" class="form-control" formControlName="search" placeholder="Type an igredient" (focus)="searchForcus = true" (focusout)="searchForcus = false" autocomplete="off" required [ngClass]="{
+					<nav class='col grey lighten-5 '>
+						<div class="nav-wrapper">
+							<div class="input-field">
+								<input id="search" type="search" name="search" class="form-control" formControlName="search" placeholder="Type an igredient" (focus)="searchForcus = true" (focusout)="searchForcus = false" autocomplete="off" required [ngClass]="{
 			'is-invalid': (ingredientForm.controls['search'].invalid && ingredientForm.controls['search'].touched),
 			'is-valid': ingredientForm.controls['search'].touched}">
-						<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-						<i class="material-icons">close</i>
-					</div>
-					<input type="submit" class="btn  grey darken-1" value="Add" [disabled]="ingredientsList.length > 15">
-					<button class="btn waves-effect waves-light" type="button" name="action">
+								<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+								<i class="material-icons">close</i>
+							</div>
+							<input type="submit" class="btn lime lighten-3 brown-text" value="Add" [disabled]="ingredientsList.length > 15">
+							<button class="btn waves-effect waves-light" type="button" name="action" (click)="searchRecipes()">
 					Find recipes !
  				</button>
-				</div>
-			</nav>
+						</div>
+					</nav>
+				</form>
 
-		</form>
 
-		<div class="col" id="ingredientsSelected">
-			<ul class="list-inline">
-				<li class="life-container" *ngFor="let g of ingredientsList">
-					<div class="chip">{{g}} <i class="close material-icons" (click)="removeMe(g)">close</i></div>
-				</li>
-				<li *ngIf="ingredientsList.length == 15" class="red-text"><strong>Reached limit</strong></li>
-			</ul>
+			</div>
+
+			<form action="#">
+				<ul id="slide-out" class="side-nav">
+					<li class="center-align">
+						<h3>Filters</h3></li>
+					<li>
+						<div class="divider"></div>
+					</li>
+					<li><a class="subheader">Star rating</a></li>
+					<li>
+						<a class="waves-effect">
+							<div><span>★</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+								<input name="group1" type="radio" id="test1" /><label for="test1">Very low</label></div>
+						</a>
+					</li>
+					<li>
+						<a class="waves-effect">
+							<div><span>★</span><span>★</span><span>☆</span><span>☆</span><span>☆</span>
+								<input name="group1" type="radio" id="test2" /><label for="test2">Low</label></div>
+						</a>
+					</li>
+					<li>
+						<a class="waves-effect">
+							<div><span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+								<input name="group1" type="radio" id="test3" /><label for="test3">Medium</label></div>
+						</a>
+					</li>
+					<li>
+						<a class="waves-effect">
+							<div><span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+								<input name="group1" type="radio" id="test4" /><label for="test4">High</label></div>
+						</a>
+					</li>
+					<li>
+						<a class="waves-effect">
+							<div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+								<input name="group1" type="radio" id="test5" /><label for="test5">Very high</label></div>
+						</a>
+					</li>
+					<li><a class="subheader">Preparation time</a></li>
+					<li><a class="waves-effect"><input type="time" name="usr_time"></a></li>
+					<li><a class="subheader">Cooking time</a></li>
+					<li><a class="waves-effect"><input type="time" name="usr_time"></a></li>
+				</ul>
+			</form>
+			<div class="parallax"><img src="https://images.pexels.com/photos/315737/pexels-photo-315737.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"></div>
+		</div>
+
+		<div class="images">
+			Discover and share many recipes<br>
+			<img src="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/8500/food-dinner-pasta-spaghetti-8500.jpg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%"><br>
+			<img src="https://images.pexels.com/photos/62097/pexels-photo-62097.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/8279/muffin.jpg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/236798/pexels-photo-236798.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%"><br> ♥ ♥ ♥ ♥ ♥
 		</div>
 	</div>
-
-
-	<form action="#">
-		<ul id="slide-out" class="side-nav">
-			<li class="center-align">
-				<h3>Filters</h3></li>
-			<li>
-				<div class="divider"></div>
-			</li>
-			<li><a class="subheader">Star rating</a></li>
-			<li>
-				<a class="waves-effect">
-					<div><span>★</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-						<input name="group1" type="radio" id="test1" /><label for="test1">Very low</label></div>
-				</a>
-			</li>
-			<li>
-				<a class="waves-effect">
-					<div><span>★</span><span>★</span><span>☆</span><span>☆</span><span>☆</span>
-						<input name="group1" type="radio" id="test2" /><label for="test2">Low</label></div>
-				</a>
-			</li>
-			<li>
-				<a class="waves-effect">
-					<div><span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
-						<input name="group1" type="radio" id="test3" /><label for="test3">Medium</label></div>
-				</a>
-			</li>
-			<li>
-				<a class="waves-effect">
-					<div><span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
-						<input name="group1" type="radio" id="test4" /><label for="test4">High</label></div>
-				</a>
-			</li>
-			<li>
-				<a class="waves-effect">
-					<div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-						<input name="group1" type="radio" id="test5" /><label for="test5">Very high</label></div>
-				</a>
-			</li>
-			<li><a class="subheader">Preparation time</a></li>
-			<li><a class="waves-effect"><input type="time" name="usr_time"></a></li>
-			<li><a class="subheader">Cooking time</a></li>
-			<li><a class="waves-effect"><input type="time" name="usr_time"></a></li>
-		</ul>
-	</form>
-
 </div>

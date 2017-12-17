@@ -15,6 +15,9 @@ import { CommonService } from './services/common.service';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedGuard } from './guards/logged.guard';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
+import { RecipeComponent } from './recipe/recipe.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { AddrecipeComponent } from './addrecipe/addrecipe.component';
 //import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
@@ -23,7 +26,10 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
     HomeComponent,
     LoginComponent,
     ProfileComponent,
-    SignupComponent
+    SignupComponent,
+    RecipeComponent,
+    SearchResultsComponent,
+    AddrecipeComponent
   ],
   imports: [
     BrowserModule,
