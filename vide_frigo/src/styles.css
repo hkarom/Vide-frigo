@@ -41,7 +41,7 @@ a {
 
 body {
   display: flex;
-  /*min-height: 100vh;*/
+  min-height: 100vh;
   flex-direction: column;
 }
 
@@ -50,9 +50,5 @@ main {
 }
 
 footer {
-  position:fixed;
-  width:100%;
-  bottom:0;
   border-top: solid 1px #DDDDDD;
-  padding-bottom:20px;
 }
