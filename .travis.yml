@@ -10,10 +10,7 @@ before_script:
 install:
 - npm install --prefix ./vide_frigo/
 - vide_frigo/node_modules/protractor/bin/webdriver-manager update
-script:
-- npm start &
-- ng test --watch=false
-- ng e2e
+
 env:
 - NODE_ENV=TEST NODE_PORT=3000 DB_SERVER_PORT=3306 MYSQL_TYPE=mysql MYSQL_HOST=localhost
   MYSQL_DATABASE=videfrigo_test MYSQL_USER=root MYSQL_PASSWORD=
