@@ -63,8 +63,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-
-
   ngOnInit() {
     this.se.add_subject.subscribe(response => {
       this.filteredList = this.se.filteredList
@@ -98,9 +96,9 @@ export class HomeComponent implements OnInit {
 
 
   sendMe(index, element) {
-    element.target.classList.remove('teal-text');
-    element.target.classList.add('brown-text');
     if (this.ingredientsList.length < 15) {
+      element.target.classList.remove('teal-text');
+      element.target.classList.add('brown-text');
       if (this.ingredientsList.indexOf(this.filteredList[index].search) == -1) {
         this.el.nativeElement.querySelector('#search').value = '';
         this.resetList();

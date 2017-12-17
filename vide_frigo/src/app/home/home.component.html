@@ -1,4 +1,3 @@
-
 <div class="row">
 
 	<div class="results">
@@ -11,54 +10,58 @@
 	</div>
 
 
- 	<div class = "page">
+	<div class="page">
 		<div class="parallax-container">
-	<div class='container'>
-		<div class="center-align">
+			<div class="col" id="ingredientsSelected">
+				<ul class="list-inline">
+					<li class="life-container" *ngFor="let g of ingredientsList">
+						<div class="chip">{{g}} <i class="close material-icons" (click)="removeMe(g)">close</i></div>
+					</li>
+					<li *ngIf="ingredientsList.length == 15" class="red-text"><strong>Reached limit</strong></li>
+				</ul>
+			</div>
+			<div class='container'>
+				<!--<div class="center-align">
 			<img class="img-responsive " src="../assets/images/logo.png" alt="image" />
-		</div>
-		<form [formGroup]="ingredientForm" (keydown.ArrowUp)="onUp($event)" (keydown.ArrowDown)="onDown($event)" (submit)="ngOnSubmit()" novalidate>
-			<div class="col" id="checkboxes">
-				<span *ngFor="let type of nameTypes; index as i" (click)="checkMe(i)">
+		</div>-->
+				<form id="ingredientForm" [formGroup]="ingredientForm" (keydown.ArrowUp)="onUp($event)" (keydown.ArrowDown)="onDown($event)" (submit)="ngOnSubmit()" novalidate>
+					<div class="col" id="checkboxes">
+						<span *ngFor="let type of nameTypes; index as i" (click)="checkMe(i)">
 				<input  type="checkbox" class="filled-in" checked/>
-				<label for="filled-in-box">{{type[0]}}</label>
+				<label class="white-text" for="filled-in-box"><strong>{{type[0]}}</strong></label>
 			</span>
-				<button data-activates="slide-out" class="btn waves-effect waves-light white teal-text button-collapse" type="button" name="action">
+						<button data-activates="slide-out" class="btn waves-effect waves-light white teal-text button-collapse" type="button" name="action">
 		More filters ...
 	</button>
-			</div>
-        
-		<nav class='col grey lighten-5 '>
-				<div class="nav-wrapper">
-					<div class="input-field">
-						<input id="search" type="search" name="search" class="form-control" formControlName="search" placeholder="Type an igredient" (focus)="searchForcus = true" (focusout)="searchForcus = false" autocomplete="off" required [ngClass]="{
+					</div>
+
+					<nav class='col grey lighten-5 '>
+						<div class="nav-wrapper">
+							<div class="input-field">
+								<input id="search" type="search" name="search" class="form-control" formControlName="search" placeholder="Type an igredient" (focus)="searchForcus = true" (focusout)="searchForcus = false" autocomplete="off" required [ngClass]="{
 			'is-invalid': (ingredientForm.controls['search'].invalid && ingredientForm.controls['search'].touched),
 			'is-valid': ingredientForm.controls['search'].touched}">
-						<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-						<i class="material-icons">close</i>
-					</div>
-					<input type="submit" class="btn lime lighten-3 brown-text" value="Add" [disabled]="ingredientsList.length > 15">
-					<button class="btn waves-effect waves-light" type="button" name="action" (click)="searchRecipes()">
+								<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+								<i class="material-icons">close</i>
+							</div>
+							<input type="submit" class="btn lime lighten-3 brown-text" value="Add" [disabled]="ingredientsList.length > 15">
+							<button class="btn waves-effect waves-light" type="button" name="action" (click)="searchRecipes()">
 					Find recipes !
  				</button>
-				</div>
-			</nav>
+						</div>
+					</nav>
 				</form>
 
-				<div class="col" id="ingredientsSelected">
-					<ul class="list-inline">
-						<li class="life-container" *ngFor="let g of ingredientsList">
-							<div class="chip">{{g}} <i class="close material-icons" (click)="removeMe(g)">close</i></div>
-						</li>
-						<li *ngIf="ingredientsList.length == 15" class="red-text"><strong>Reached limit</strong></li>
-					</ul>
-				</div>
+
 			</div>
 
 			<form action="#">
 				<ul id="slide-out" class="side-nav">
-					<li class="center-align"><h3>Filters</h3></li>
-					<li><div class="divider"></div></li>
+					<li class="center-align">
+						<h3>Filters</h3></li>
+					<li>
+						<div class="divider"></div>
+					</li>
 					<li><a class="subheader">Star rating</a></li>
 					<li>
 						<a class="waves-effect">
@@ -99,21 +102,16 @@
 			<div class="parallax"><img src="https://images.pexels.com/photos/315737/pexels-photo-315737.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"></div>
 		</div>
 
-
-
-
 		<div class="images">
-			Discover many recipes<br>
+			Discover and share many recipes<br>
 			<img src="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
 			<img src="https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
-			<img src="https://images.pexels.com/photos/8500/food-dinner-pasta-spaghetti-8500.jpg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%"><br>
+			<img src="https://images.pexels.com/photos/8500/food-dinner-pasta-spaghetti-8500.jpg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%"><br>
 			<img src="https://images.pexels.com/photos/62097/pexels-photo-62097.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
 			<img src="https://images.pexels.com/photos/8279/muffin.jpg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
-			<img src="https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%"><br>
-			<img src="https://images.pexels.com/photos/160805/breakfast-vegan-healthy-eat-160805.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
-			<img src="https://images.pexels.com/photos/101533/pexels-photo-101533.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
-			<img src="https://images.pexels.com/photos/236798/pexels-photo-236798.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%"><br>
-			♥ ♥ ♥ ♥ ♥
+			<img src="https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%">
+			<img src="https://images.pexels.com/photos/236798/pexels-photo-236798.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" width="20%"><br> ♥ ♥ ♥ ♥ ♥
 		</div>
 	</div>
 </div>
