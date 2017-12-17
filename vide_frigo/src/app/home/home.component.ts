@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
       menuWidth: 400,
       edge: 'right',
     });
+    $('.parallax').parallax();
   }
 
 
