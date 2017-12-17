@@ -6,40 +6,43 @@
 			<div class="center-align red-text" *ngIf="filteredList.length == 0">
 				<span>No ingredients found</span>
 			</div>
-			<a *ngFor="let item of filteredList; index as i; first as isFirst" [class.active]="isFirst && searchOnFocus()" class="collection-item" (click)="sendMe(i)"><strong>{{item.search}}</strong></a>
+			<a *ngFor="let item of filteredList; index as i; first as isFirst" id="I{{i}}" [class.active]="isFirst && searchOnFocus()" class="collection-item" (click)="sendMe(i,$event)"><strong>{{item.search}}</strong></a>
 		</div>
 	</div>
 
-	<div class = "page">
-		<div class="parallax-container">
-			<div class='container'>
-				<form [formGroup]="ingredientForm" (keydown.ArrowUp)="onUp($event)" (keydown.ArrowDown)="onDown($event)" (submit)="ngOnSubmit()" novalidate>
-					<div class="col" id="checkboxes">
-						<span *ngFor="let type of nameTypes; index as i" (click)="checkMe(i)">
-							<input  type="checkbox" class="filled-in" checked/>
-							<label for="filled-in-box">{{type[0]}}</label>
-						</span>
-						<button data-activates="slide-out" class="btn waves-effect waves-light brown button-collapse" type="button" name="action">
-							More filters ...
-						</button>
-					</div>
 
-					<nav class='col grey lighten-5 '>
-						<div class="nav-wrapper">
-							<div class="input-field">
-								<input id="search" type="search" name="search" class="form-control" formControlName="search" placeholder="Type an igredient" (focus)="searchForcus = true" (focusout)="searchForcus = false" autocomplete="off" required [ngClass]="{
-									'is-invalid': (ingredientForm.controls['search'].invalid && ingredientForm.controls['search'].touched),
-									'is-valid': ingredientForm.controls['search'].touched}"
-								>
-								<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-								<i class="material-icons">close</i>
-							</div>
-							<input type="submit" class="btn  grey darken-1" value="Add" [disabled]="ingredientsList.length > 15">
-							<button class="btn waves-effect waves-light" type="button" name="action">
-								Find recipes !
-			 				</button>
-						</div>
-					</nav>
+ 	<div class = "page">
+		<div class="parallax-container">
+	<div class='container'>
+		<div class="center-align">
+			<img class="img-responsive " src="../assets/images/logo.png" alt="image" />
+		</div>
+		<form [formGroup]="ingredientForm" (keydown.ArrowUp)="onUp($event)" (keydown.ArrowDown)="onDown($event)" (submit)="ngOnSubmit()" novalidate>
+			<div class="col" id="checkboxes">
+				<span *ngFor="let type of nameTypes; index as i" (click)="checkMe(i)">
+				<input  type="checkbox" class="filled-in" checked/>
+				<label for="filled-in-box">{{type[0]}}</label>
+			</span>
+				<button data-activates="slide-out" class="btn waves-effect waves-light white teal-text button-collapse" type="button" name="action">
+		More filters ...
+	</button>
+			</div>
+        
+		<nav class='col grey lighten-5 '>
+				<div class="nav-wrapper">
+					<div class="input-field">
+						<input id="search" type="search" name="search" class="form-control" formControlName="search" placeholder="Type an igredient" (focus)="searchForcus = true" (focusout)="searchForcus = false" autocomplete="off" required [ngClass]="{
+			'is-invalid': (ingredientForm.controls['search'].invalid && ingredientForm.controls['search'].touched),
+			'is-valid': ingredientForm.controls['search'].touched}">
+						<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+						<i class="material-icons">close</i>
+					</div>
+					<input type="submit" class="btn lime lighten-3 brown-text" value="Add" [disabled]="ingredientsList.length > 15">
+					<button class="btn waves-effect waves-light" type="button" name="action" (click)="searchRecipes()">
+					Find recipes !
+ 				</button>
+				</div>
+			</nav>
 				</form>
 
 				<div class="col" id="ingredientsSelected">

@@ -57,6 +57,7 @@ export class AuthService {
 		localStorage.removeItem('user.email');
 		localStorage.removeItem('user.username');
 		localStorage.removeItem('user.description');
+    localStorage.removeItem('user.picture');
 	}
 
 
