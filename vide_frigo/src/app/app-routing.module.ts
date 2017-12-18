@@ -9,6 +9,9 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { AddrecipeComponent } from './addrecipe/addrecipe.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedGuard } from './guards/logged.guard';
+import { RecipesAddedComponent } from './recipes-added/recipes-added.component';
+import { FavoritesComponent } from './favorites/favorites.component';
+
 
 const routes: Routes = [
 	{ path: '#', redirectTo: '', pathMatch: 'full' },
@@ -17,7 +20,9 @@ const routes: Routes = [
 	{	path: 'login', component: LoginComponent, canActivate: [LoggedGuard] },
 	{	path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 	{	path: 'results', component: SearchResultsComponent },
-	{	path: 'addrecipe', component: AddrecipeComponent, canActivate: [AuthGuard] }
+	{	path: 'addrecipe', component: AddrecipeComponent, canActivate: [AuthGuard] },
+	{	path: 'recipeadded', component: RecipesAddedComponent, canActivate: [AuthGuard] },
+	{	path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

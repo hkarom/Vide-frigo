@@ -18,6 +18,8 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import { RecipeComponent } from './recipe/recipe.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { AddrecipeComponent } from './addrecipe/addrecipe.component';
+import { RecipesAddedComponent } from './recipes-added/recipes-added.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 //import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
@@ -29,7 +31,9 @@ import { AddrecipeComponent } from './addrecipe/addrecipe.component';
     SignupComponent,
     RecipeComponent,
     SearchResultsComponent,
-    AddrecipeComponent
+    AddrecipeComponent,
+    RecipesAddedComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,

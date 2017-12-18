@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../objects/User';
 declare var jquery: any;
 declare var $: any;
+
+const urlrecipesposted = 'http://localhost:3000/api/recipesposted'
 
 @Component({
   selector: 'app-profile',
@@ -9,21 +12,14 @@ declare var $: any;
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  nom: string
-  prenom: string
-  age: number
-  level: string
 
   private user: User;
 
-  constructor() { }
+
+  constructor(  private router: Router) { }
 
   ngOnInit() {
-    this.nom = "Smith";
-    this.prenom = "Jean";
-    this.age = 45;
-    this.level = "Expert";
-    console.log('HO');
+
 console.log(localStorage.getItem('user.picture'));
     this.user = new User(
       Number(localStorage.getItem('user.id')),
@@ -53,7 +49,7 @@ console.log(localStorage.getItem('user.picture'));
   }
 
   favoritesRecipes() {
-
+  //this.router.navigate(['/favorites']);
   }
 
   postedComments() {

@@ -1,5 +1,76 @@
 let express = require('express');
-let bd = require('./db');
+let db = require('./db');
+let router = express.Router();
+
+
+function checkUndefinedObject(object, fields) {
+	let ok = true;
+	for (let field in fields) {
+		if (object[fields[field]] === undefined)
+			ok = false;
+	}
+	return ok;
+}
+
+
+function sendError(res, reason) {
+	res.status(400).send({
+		error: true,
+		reason: reason
+	});
+	console.log(reason);
+}
+
+
+router.post('/favorites', (req, res) => {
+	res.contentType('application/json');
+	id=req.body.id;
+		db.query('SELECT recipe.name, recipe.picture, user.login FROM favorite, user, recipe WHERE recipe.id_creator=user.id and favorite.id_user=recipe.id and favorite.id_user=?', id , (err, result) => {
+			if (err) {console.log("erreur anna!!!!!")}
+      else {
+			let favorites = [];
+			for (let i = 0; i < result.length; i++) {
+				favorites.push({
+					name: result[i]['name'],
+          pic: result[i]['picture'],
+					login: result[i]['login']
+				});
+			}
+			res.status(200).send(favorites);
+		}
+  });
+
+
+});
+
+
+
+/*router.post('/postedRecipes/:id', (req, res) => {
+  const id = req.params.id;
+bd.query('SELECT name, picture, mark FROM recipe WHERE id_creator=? "' + id + '" ', function (error, recipesposted) {
+  if (error) {
+    console.log("erreur dans la requete postedRecipes");
+    //console.log(error);
+      } else {
+    res.json(recipesposted);
+  }
+});
+});*/
+
+/*router.post('/favorites/:id', (req, res) => {
+const id = req.params.id;
+bd.query('SELECT recipe.name, recipe.picture, user.login FROM favorite, user, recipe WHERE recipe.id_creator=user.id and favorite.id_user=recipe.id and favorite.id_user=? "' + id + '" ', function (error, favorites) {
+  if (error) {
+    console.log("erreur dans la requete favorites");
+    //console.log(error);
+      } else {
+    res.json(favorites);
+  }
+});
+});*/
+
+
+
 
 /*let router = express.Router();
 const saltRounds = 8;
