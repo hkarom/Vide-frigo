@@ -9,21 +9,13 @@ declare var $: any;
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  nom: string
-  prenom: string
-  age: number
-  level: string
-
+  
   private user: User;
 
   constructor() { }
 
   ngOnInit() {
-    this.nom = "Smith";
-    this.prenom = "Jean";
-    this.age = 45;
-    this.level = "Expert";
-    console.log('HO');
+
 console.log(localStorage.getItem('user.picture'));
     this.user = new User(
       Number(localStorage.getItem('user.id')),
