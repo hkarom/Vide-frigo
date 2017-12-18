@@ -103,7 +103,7 @@ public class Recipe {
     public String getCookingTime() {
         return cookingTime;
     }
-    
+
     public String getDetail() {
     	return details;
     }
@@ -120,7 +120,7 @@ public class Recipe {
     public static ArrayList<Recipe> search(String keyword) throws IOException {
         keyword.replaceAll(" ", "-");
 
-        ArrayList<Recipe> resultRecipes = new ArrayList<>();
+        ArrayList<Recipe> resultRecipes = new ArrayList<Recipe>();
 
         Document document = Jsoup.connect("http://www.marmiton.org/recettes/recherche.aspx?aqt=" + keyword).get();
 
@@ -159,7 +159,7 @@ public class Recipe {
 
     private ArrayList<Ingredient> extractIngredients(String ingredientsString){
 
-        ArrayList<Ingredient> result = new ArrayList<>();
+        ArrayList<Ingredient> result = new ArrayList<Ingredient>();
 
         String completeString[] = ingredientsString.split(":");
         completeString = completeString[1].split("-");

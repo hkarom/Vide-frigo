@@ -45,7 +45,7 @@ export class RecipeComponent implements OnInit {
 
     this.commentsList.push(c1,c2);
 
-    this.recipe = new Recipe(-1, -1, 'Tarte aux fraises', 'admin', '30:00', '45:00', 'Some steps', 'DESSERT', 10,2);
+    this.recipe = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
     this.commentForm = this.fb.group({
       message: [null, [Validators.required, Validators.minLength(8)]],
       mark: [null, [Validators.required]],

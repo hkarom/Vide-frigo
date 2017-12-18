@@ -20,7 +20,6 @@ export class SearchResultsComponent implements OnInit {
   private searchForcus = false;
   private ingredientsList = [];
   private mark = -1;
-  private cookingTime = '00:00';
   private preparationTime = '00:00';
   public recipeList = [];
 
@@ -31,13 +30,13 @@ export class SearchResultsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    let r1 = new Recipe(-1, -1, 'Tarte aux fraises', '', '30:00', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r2 = new Recipe(-1, -1, 'Tarte aux fraises', '', '30:00', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r3 = new Recipe(-1, -1, 'Tarte aux fraises', '', '30:00', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r4 = new Recipe(-1, -1, 'Tarte aux fraises', '', '30:00', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r5 = new Recipe(-1, -1, 'Tarte aux fraises', '', '30:00', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r6 = new Recipe(-1, -1, 'Tarte aux fraises', '', '30:00', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r7 = new Recipe(-1, -1, 'Tarte aux fraises', '', '30:00', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    let r1 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    let r2 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    let r3 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    let r4 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    let r5 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    let r6 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    let r7 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
 
     this.recipeList.push(r1, r2, r3, r4, r5, r6, r7);
   }
@@ -45,7 +44,6 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit() {
       this.route.queryParams.forEach(params => {
         this.ingredientsList = params.ingredients;
-        this.cookingTime = params.cTime.replace(/m/g,':');
         this.preparationTime = params.pTime.replace(/m/g,':');
         this.mark = params.mark;
         this.types = params.types;

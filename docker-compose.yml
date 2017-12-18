@@ -11,6 +11,17 @@ services:
       MYSQL_DATABASE: vide_frigo
     ports:
       - "3316:3306"
+  peuplement: 
+    build: ./vide_frigo/initdb/peuplement_BD
+    image: vfrigo:peuplement
+    volumes: 
+      - ./vide_frigo/initdb/peuplement_BD:/peuplement_BD
+      - peuplement_BD/target
+    ports:
+      - "4567:4567"
+    depends_on:
+      - db
+    init: true
   server:
     build: ./vide_frigo
     image: vfrigo:vide_frigo
@@ -30,5 +41,4 @@ services:
       - "4200:4200"
     depends_on:
       - db
-    #command: ["./wait-for.sh", "db:3306", "-t", "30"]
     init: true

@@ -2,8 +2,9 @@ package script;
 import src.source.*;
 import java.sql.*;
 import java.util.ArrayList;
+
 public class Main {
-	
+
 	public static void addRecipe(Recipe r, Connection conn) {
 		// the mysql insert statement
 	      String query = " insert into Recipe (id_creator, name, cooking_time, steps, category)"
@@ -24,7 +25,7 @@ public class Main {
 	    	  System.err.println(e.getMessage());
 	      }
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 		// create a mysql database connection
@@ -42,7 +43,7 @@ public class Main {
 	    	  System.out.println(".");
 	    	  addRecipe(r,conn);
 	      }
-		
+
 	      conn.close();
 		}
 		catch (Exception e){
@@ -50,6 +51,6 @@ public class Main {
 			System.out.println(e);
 			System.err.println(e.getMessage());
 		}
-		
+
 	}
 }

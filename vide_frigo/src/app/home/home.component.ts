@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
   private searchForcus = false;
   private ingredientsList = [];
   private mark = -1;
-  private cookingTime = '00m00';
   private preparationTime = '00m00';
 
   constructor(
@@ -54,9 +53,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  editCookingTime() {
-    this.cookingTime = this.el.nativeElement.querySelector('#cookingTime').value.replace(/:/g, 'm');
-  }
 
   editPreparationTime() {
     this.preparationTime = this.el.nativeElement.querySelector('#preparationTime').value.replace(/:/g, 'm');
