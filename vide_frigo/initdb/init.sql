@@ -21,7 +21,7 @@ CREATE TABLE Recipe (
   id bigint(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	id_creator bigint(20) NOT NULL,
   name varchar(100) NOT NULL,
-  picture VARCHAR(512) NOT NULL,
+  picture VARCHAR(512),
   cooking_time time NOT NULL,
   preparation_time time NOT NULL,
   steps varchar(2000) NOT NULL,
