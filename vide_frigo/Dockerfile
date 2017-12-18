@@ -24,10 +24,21 @@ EXPOSE 4200
 
 FROM java:8
 
-WORKDIR /
+# Install maven
+RUN apt-get update
+RUN apt-get install -y maven
 
-COPY /initdb/peuplement_BD/target/peuplement_BD-0.0.1.jar peuplement_BD.jar
+WORKDIR /peuplement_BD
 
-EXPOSE 8080
+# Prepare by downloading dependencies
+ADD /initdb/peuplement_BD/pom.xml /peuplement_BD/pom.xml
+CMD cat /peuplement_BD/pom.xml
+RUN ["mvn", "dependency:resolve"]
+RUN ["mvn", "verify"]
 
-CMD java -jar peuplement_BD.jar
+ADD /initdb/peuplement_BD/src/* /peuplement_BD/src/
+
+RUN ["mvn", "package"]
+
+EXPOSE 4567
+CMD ["java", "-jar", "/peuplement_BD/target/peuplement_BD-0.0.1.jar"]

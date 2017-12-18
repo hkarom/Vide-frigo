@@ -25,21 +25,29 @@ public class Main {
 	      }
 	}
 	
-	public static void main() {
+	public static void main(String[] args) {
 		try {
 		// create a mysql database connection
-	      String myDriver = "org.gjt.mm.mysql.Driver";
+			System.out.println("MyDriver");
+	      String myDriver = "com.mysql.jdbc.Driver";
+	      System.out.println("MyURL");
 	      String myUrl = "jdbc:mysql://localhost/vide_frigo";
+	      System.out.println("Class.forName");
 	      Class.forName(myDriver);
+	      System.out.println("Connection");
 	      Connection conn = DriverManager.getConnection(myUrl, "root", "");
+	      System.out.println("Recherche");
 	      ArrayList<Recipe>recipes = Recipe.search("tomate");
 	      for (Recipe r : recipes) {
+	    	  System.out.println(".");
 	    	  addRecipe(r,conn);
 	      }
 		
 	      conn.close();
 		}
 		catch (Exception e){
+			System.out.println("Error:");
+			System.out.println(e);
 			System.err.println(e.getMessage());
 		}
 		
