@@ -1,4 +1,4 @@
-import { Injectable, Inject, Component, OnInit, ElementRef, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
+import { Injectable, Inject, Component, OnInit, ElementRef } from '@angular/core';
 import { SearchResultsComponent } from '../search-results/search-results.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,7 @@ declare var $: any;
 
 const ingredientsUrl = 'http://localhost:3000/api/ingredients';
 const recipesUrl = 'http://localhost:3000/api/recipes';
+const MAX_STARS = 5;
 
 @Component({
   selector: 'app-home',
@@ -21,18 +22,18 @@ export class HomeComponent implements OnInit {
   private ingredientForm: FormGroup;
   private filteredList = [];
   private nameTypes = [['Starter', true], ['Dish', true], ['Dessert', true]];
+  private starsType = [['Very low', 1, 'verylow'], ['Low', 2, 'low'], ['Medium', 3, 'medium'], ['High', 4, 'high'], ['Very high', 5, 'veryhigh']];
   private searchForcus = false;
   private ingredientsList = [];
-
-  @ViewChild('dynamicContent', { read: ViewContainerRef })
-  private pageContent: ViewContainerRef;
+  private mark = -1;
+  private cookingTime = '00m00';
+  private preparationTime = '00m00';
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private el: ElementRef,
-    private se: CommonService,
-    private cfr: ComponentFactoryResolver
+    private se: CommonService
   ) {
     this.ingredientForm = this.fb.group({
       search: [null, [Validators.required]],
@@ -48,21 +49,27 @@ export class HomeComponent implements OnInit {
             this.filteredList = value;
             console.log(this.filteredList);
           }
-        }, error => console.log(error));
+        }, error => console.log('Error:' + error));
       }
     });
   }
 
-
-  searchRecipes() {
-    this.pageContent.remove();
-    const resultsComponentFactory = this.cfr.resolveComponentFactory(SearchResultsComponent);
-  //  this.http.get<Recipe[]>(recipesUrl).subscribe((results) => {
-      const resultsFactory = this.pageContent.createComponent(resultsComponentFactory);
-      //resultsFactory.instance.recipeList = results;
-    //});
+  editCookingTime() {
+    this.cookingTime = this.el.nativeElement.querySelector('#cookingTime').value.replace(/:/g, 'm');
   }
 
+  editPreparationTime() {
+    this.preparationTime = this.el.nativeElement.querySelector('#preparationTime').value.replace(/:/g, 'm');
+  }
+
+  displayStar(number) {
+    let stars = "";
+    for(let i = 0; i < MAX_STARS; i++) {
+      if(i < number) stars += '★';
+      else stars += '☆';
+    }
+    return stars;
+  }
 
   ngOnInit() {
     this.se.add_subject.subscribe(response => {
@@ -76,10 +83,12 @@ export class HomeComponent implements OnInit {
     $('.parallax').parallax();
   }
 
+  printAll() {
+  }
+
 
   ngOnSubmit() {
     const selectElement = this.el.nativeElement.querySelector('.collection .active');
-    console.log(selectElement);
     if (selectElement !== null) selectElement.click();
 
   }
@@ -150,11 +159,11 @@ export class HomeComponent implements OnInit {
   resetList() {
     return this.http.get(ingredientsUrl).map((value: any) => {
       if (value.error) {
-        console.log(value.error);
+        console.log('Error'+value.error);
       } else {
         return value;
       }
-    }, error => console.log(error));
+    }, error => console.log('Error' + error));
   }
 
 

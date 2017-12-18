@@ -5,13 +5,12 @@
 	      <a class="brand-logo right brown-text" routerLink="#">Vide Frigo</a>
 	      <!--<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 	      --><ul class="left hide-on-med-and-down">
-	        <li><a routerLink="#" class="brown-text"><i class="material-icons left">home</i>Home </a> </li>
+	        <li><a routerLink="" class="brown-text"><i class="material-icons left">home</i>Home </a> </li>
 	        <li *ngIf='!auth.isLoggedIn()'><a routerLink="login" class="brown-text"><i class="material-icons left">fingerprint</i>Login </a> </li>
 					<li *ngIf='auth.isLoggedIn()'><a class="brown-text" (click)='logout()'> <i class="material-icons left">power_settings_new</i>Sign out </a></li>
 	        <li *ngIf='!auth.isLoggedIn()'><a routerLink="signup" class="brown-text"> <i class="material-icons left">control_point</i>Register </a></li>
 					<li *ngIf='auth.isLoggedIn()'><a routerLink="profile" class="brown-text"> <i class="material-icons left">account_box</i>{{userName()}} profile</a></li>
 					<li *ngIf='auth.isLoggedIn()'><a routerLink="addrecipe" class="brown-text"> <i class="material-icons left">local_dining</i>Add a recipe</a></li>
-					<li><a routerLink="results" class="brown-text"> results</a></li>
 	      </ul>
 	    </div>
 	  </nav>

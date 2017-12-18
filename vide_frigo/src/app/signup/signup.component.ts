@@ -66,7 +66,7 @@ export class SignupComponent implements OnInit {
   loadPicture() {
       let headers = new HttpHeaders();
       headers = headers.set('username',  localStorage.getItem('user.username'));
-      return this.http.post('http://localhost:3000/auth/upload', this.input, {headers: headers}).map((data: any) => {
+      return this.http.post('http://localhost:3000/api/upload', this.input, {headers: headers}).map((data: any) => {
         console.log(data);
         localStorage.setItem('user.picture', data.picture);
       }, err => { console.log('err'); });

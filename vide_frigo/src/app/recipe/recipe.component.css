@@ -1,0 +1,69 @@
+/*div.head-header {
+	margin-top:2px;
+	padding-top:10px;
+padding-bottom:10px;
+margin-bottom:20px;
+}*/
+
+div.head-header img {
+  max-width:500px;
+}
+
+div.description {
+
+}
+
+div.card-content-title {
+  margin-top: 30px;
+}
+
+nav.nav-extended {
+  margin-top:-14px;
+}
+
+.star {
+  font-size:250%;
+  color: gold;
+}
+
+.substar {
+  font-size:150%;
+  color: gold;
+}
+
+.ingredients {
+position:absolute;
+margin-left: 400px;
+margin-top: 65px;
+}
+
+.ingredients div {
+  margin-top: 10px;
+}
+
+.rating {
+  margin-top: 20px;
+}
+
+
+.rating .default {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating .default > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+  cursor:pointer;
+}
+.rating .default > span:hover:before,
+.rating .default > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+
+#steps, #comments, #comment {
+  text-align: justify;
+  width: 90%;
+ margin: 0 auto;
+}

@@ -1,3 +1,95 @@
-<p>
-  recipe works!
-</p>
+<div class="container">
+
+  <div class="head-header lime lighten-5" align="left">
+
+    <div class="card horizontal description">
+      <div class="card-image">
+        <img src="../assets/images/nopicture.jpg">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+
+          <div class="ingredients">
+            <p><strong>Ingredients</strong></p>
+            <div *ngFor="let item of ingredientsList; index as i" class="chip">{{item}}</div>
+          </div>
+
+          <h5>{{recipe.name}}</h5>
+          <span class="star">{{displayStar(calculMark(recipe.mark, recipe.nb_vote))}} {{(recipe.mark/recipe.nb_vote).toFixed(1)}}</span>
+          <div class="card-content-title">
+            <p><strong><i class="material-icons left">access_alarm</i> Cooking time </strong></p>
+            <p>{{recipe.cooking_time}}</p>
+          </div>
+          <div class="card-content-title">
+            <p><strong><i class="material-icons left">access_alarm</i> Preparation time </strong></p>
+            <p>{{recipe.preparation_time}}</p>
+
+          </div>
+        </div>
+        <div class="card-action" align="right">
+          Posted by <a routerLink="/admin">admin</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <nav class="nav-extended brown">
+
+    <div class="nav-content">
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a class="active" (click)="section = 1">Steps</a></li>
+        <li class="tab"><a class="active" (click)="section = 2">Posted comments</a></li>
+        <li class="tab"><a class="active" (click)="section = 3">Comment this recipe</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+  <div *ngIf="section===1" id="steps" class="col s12">
+    <div style="margin-top:20px;">{{recipe.steps}}</div>
+
+  </div>
+
+  <div *ngIf="section===2" id="comments" class="col s12">
+    <p *ngIf="commentsList.length == 0">This recipe has not been commented yet.</p>
+    <ul *ngIf="commentsList.length > 0" class="">
+
+      <li class="collection-item" *ngFor="let item of commentsList; index as i">
+        <div>
+          <h5><a routerLink="/{{item.id_user}}">{{item.id_user}}</a></h5>
+          <span class="substar">{{displayStar(item.star)}}</span>
+          <p><i class="material-icons" style="margin-right:10px;">chat</i> {{item.message}}</p>
+        </div>
+        <div class="divider"></div>
+      </li>
+    </ul>
+
+  </div>
+
+
+  <div *ngIf="section===3" id="comment" class="col s12">
+
+    <div class="rating">
+      <span class="default star" *ngIf="commentMark==0">
+        <span *ngFor="let mark of marks" (click)="commentMark = mark">☆</span>
+      </span>
+      <span class="star" *ngIf="commentMark > 0">{{displayStar(commentMark)}} </span><i *ngIf="commentMark > 0" class="material-icons" (click)="commentMark=0">close</i>
+    </div>
+    <div class="row">
+      <form *ngIf="userName != null && userName != undefined" class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+            <label for="icon_prefix2">Comment</label>
+          </div>
+        </div>
+        <button class="btn waves-effect waves-light lime lighten-4 brown-text" type="button" (click)="sendComment()">
+ Send
+</button>
+      </form>
+      <p *ngIf="userName === null || userName === undefined">Sorry, you need to be <a routerLink="/login">logged in</a> to post a comment.</p>
+    </div>
+  </div>
+</div>

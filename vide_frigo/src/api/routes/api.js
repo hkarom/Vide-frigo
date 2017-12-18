@@ -29,7 +29,7 @@ router.post('/upload', function(req, res) {
 
   form.on('file', function(name, file) {
     let dimensions = sizeOf(file.path);
-    if (dimensions.width > 300 || dimensions.height > 300) {
+    if (dimensions.width > 500 || dimensions.height > 500) {
       fs.unlink(file.path);
       filename = null;
     } else {
