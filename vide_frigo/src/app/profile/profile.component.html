@@ -226,7 +226,7 @@
 			<div class="background center-align">
 				<img src="../../assets/images/fond.jpeg">
 			</div>
-			<img *ngIf="user.picture != null" src="../../assets/profiles/{{user.picture}}" style="width: 200px;">
+			<img *ngIf="user.picture != null" src="{{user.picture}}" style="width: 200px;">
 			<img align="center" *ngIf="user.picture == null" src="../../assets/images/defaultProfile.png" style="width: 200px;">
 		</div>
 		<p class="center-align"><span class="teal-text"><span style="font-size:20px;">{{user.name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.email}}</span>
