@@ -1,3 +1,10 @@
+<!--<div class="container-fluid">
+		<main>
+			<template #dynamicContent>
+			</template>
+			</main>
+		</div>-->
+
 <div class="row">
 
 	<div class="results">
@@ -45,14 +52,12 @@
 								<i class="material-icons">close</i>
 							</div>
 							<input type="submit" class="btn lime lighten-3 brown-text" value="Add" [disabled]="ingredientsList.length > 15">
-							<button class="btn waves-effect waves-light" type="button" name="action" (click)="searchRecipes()">
+							<button class="btn waves-effect waves-light" type="button" name="action" [routerLink]="['results']" [queryParams]="{ ingredients: ingredientsList, mark: mark, cTime: cookingTime, pTime: preparationTime, types: nameTypes }" >
 					Find recipes !
  				</button>
 						</div>
 					</nav>
 				</form>
-
-
 			</div>
 
 			<form action="#">
@@ -63,40 +68,18 @@
 						<div class="divider"></div>
 					</li>
 					<li><a class="subheader">Star rating</a></li>
-					<li>
+
+					<li *ngFor="let item of starsType" >
 						<a class="waves-effect">
-							<div><span>★</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-								<input name="group1" type="radio" id="test1" /><label for="test1">Very low</label></div>
-						</a>
-					</li>
-					<li>
-						<a class="waves-effect">
-							<div><span>★</span><span>★</span><span>☆</span><span>☆</span><span>☆</span>
-								<input name="group1" type="radio" id="test2" /><label for="test2">Low</label></div>
-						</a>
-					</li>
-					<li>
-						<a class="waves-effect">
-							<div><span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
-								<input name="group1" type="radio" id="test3" /><label for="test3">Medium</label></div>
-						</a>
-					</li>
-					<li>
-						<a class="waves-effect">
-							<div><span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
-								<input name="group1" type="radio" id="test4" /><label for="test4">High</label></div>
-						</a>
-					</li>
-					<li>
-						<a class="waves-effect">
-							<div><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-								<input name="group1" type="radio" id="test5" /><label for="test5">Very high</label></div>
+							<div>
+								<span class="star">{{displayStar(item[1])}}</span>
+								<input name="group1" type="radio" id="{{item[2]}}" (click)="mark = item[1]"/>
+								<label for="{{item[2]}}" >{{item[0]}}</label>
+								</div>
 						</a>
 					</li>
 					<li><a class="subheader">Preparation time</a></li>
-					<li><a class="waves-effect"><input type="time" name="usr_time"></a></li>
-					<li><a class="subheader">Cooking time</a></li>
-					<li><a class="waves-effect"><input type="time" name="usr_time"></a></li>
+					<li><a class="waves-effect"><input id="preparationTime" type="time" value="00:00" name="usr_time" (change)="editPreparationTime()"></a></li>
 				</ul>
 			</form>
 			<div class="parallax"><img src="https://images.pexels.com/photos/315737/pexels-photo-315737.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"></div>

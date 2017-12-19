@@ -1,3 +1,84 @@
-<p>
-  search-results works!
-</p>
+<div id="navbarFixed">
+  <nav class="nav-extended white lighten-4">
+
+    <div class="nav-content">
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a class="active brown-text">Search results : {{recipeList.length}} recipes found</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<div class="filters">
+  <h5>Filters</h5>
+  <div class="divider"></div>
+  <div class="ingredients">
+    <div *ngFor="let item of ingredientsList; index as i; first as isFirst" id="I{{i}}" class="chip">{{item}}</div>
+  </div>
+  <div class="_section">
+    <div class="input-field col s10">
+      <select>
+          <option value="" disabled selected>Sort</option>
+          <option value="1">Best mark</option>
+          <option value="2">Most commented</option>
+          <option value="3">Number of ingredient</option>
+        </select>
+    </div>
+  </div>
+
+  <div class="_section">
+    <div class="sidebar-header">Star rating</div>
+    <ul class="collection">
+
+      <li *ngFor="let item of starsType" class="collection-item">
+        <div><span class="star">{{displayStar(item[1])}}</span>
+          <input name="group1" type="radio" id="STAR{{item[1]}}" [checked]="mark == item[1]"/><label for="{{item[2]}}">{{item[0]}}</label></div>
+      </li>
+    </ul>
+  </div>
+  <div class="_section">
+    <div class="sidebar-header">Preparation time</div>
+    <a><input type="time" name="usr_time" value="{{preparationTime}}"></a>
+  </div>
+
+</div>
+
+
+
+<div id="resultsSearch" class="results">
+  <div class="center-align red-text" *ngIf="recipeList.length == 0">
+    <span>Sorry, but no recipe were found with the specified filters</span>
+  </div>
+
+  <div class="row content">
+    <div class="">
+      <div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipeList; index as i; first as isFirst;">
+        <div class="card action">
+          <div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
+            <img class="activator" src="../assets/images/nopicture.jpg">
+          </div>
+          <div class="divider"></div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{item.name}}<i class="material-icons right">more_vert</i></span>
+            <div class="rating">
+
+              <span class="star">{{displayStar(calculMark(item.mark, item.nb_vote))}}</span>
+                <span class="recipeTime"><strong>Cooking time</strong> - {{item.cooking_time}}</span>
+                <span class="recipeTime"><strong>Preparation time</strong> - {{item.preparation_time}}</span>
+
+            </div>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Steps<i class="material-icons right">close</i></span>
+            <p>{{item.steps}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>

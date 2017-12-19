@@ -5,7 +5,7 @@ margin-top: 100px;
 div.results {
 	margin-left: 0;
 	margin-top:0%;
-	width : 15%;
+	width : 16%;
 	position : absolute;
 }
 
@@ -51,13 +51,18 @@ div.collection {
 	margin-top:0;
   overflow: auto;
   min-height: 500px;
-	max-height: 780px;
+	max-height: 800px;
 	border-style: none;
 	border-right-style: solid;
 }
 
 div.collection a {
 	cursor: pointer;
+}
+
+.star {
+  font-size:150%;
+  color: gold;
 }
 
 .rating {
