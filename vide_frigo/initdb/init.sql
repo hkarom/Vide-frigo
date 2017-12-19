@@ -26,7 +26,7 @@ CREATE TABLE Recipe (
   steps varchar(2000) NOT NULL,
   category enum('STARTER','DISH','DESSERT') NOT NULL,
 	mark float,
-  nb_vote bigint(20)
+  nb_vote bigint(20),
 	FOREIGN KEY (id_creator) REFERENCES User(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
@@ -44,7 +44,7 @@ CREATE TABLE Comment (
 
 CREATE TABLE Recipe_Ing (
   id_recipe bigint(20),
-  name_ing VARCHAR(50)
+  name_ing VARCHAR(50),
 	FOREIGN KEY (id_recipe) REFERENCES Recipe(id) ON DELETE CASCADE,
 	FOREIGN KEY (name_ing) REFERENCES Ingredient(name),
 	PRIMARY KEY (id_recipe, name_ing)
@@ -53,7 +53,7 @@ CREATE TABLE Recipe_Ing (
 
 CREATE TABLE Favorite (
   id_user bigint(20),
-  id_recipe bigint(20)
+  id_recipe bigint(20),
 	FOREIGN KEY (id_user) REFERENCES User(id) ON DELETE CASCADE,
 	FOREIGN KEY (id_recipe) REFERENCES Recipe(id),
 	PRIMARY KEY (id_user, id_recipe)

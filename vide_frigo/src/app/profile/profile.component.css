@@ -1,3 +1,18 @@
+div.head-header {
+	margin-top:2px;
+	padding-top:10px;
+padding-bottom:10px;
+margin-bottom:20px;
+}
+
+div.head-header h3 {
+	margin-left:20px;
+}
+
+#slide-out li {
+	cursor:pointer;
+}
+
 
 /*.identity{
 	margin-top:2%;

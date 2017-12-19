@@ -1,68 +1,243 @@
-<div class="row left-align">
+<!---page profile-->
+<div *ngIf="section===1">
+	<div class="head-header lime lighten-5">
+		<h3 class="header brown-text text-lighten-1">Profile</h3>
+	</div>
+	<div class="row center-align">
+		<div class="col s1"></div>
+		<div class="col s8">
+			<div class="section col s12">
 
-<div class="col s1"></div>
-<div class="col s8">
+				<div>
+					<div class="card-image">
+						<img *ngIf="user.picture != null" src="../../assets/profiles/{{user.picture}}" style="width: 200px;">
+						<img *ngIf="user.picture == null" src="../../assets/images/defaultProfile.png">
+					</div>
+					<h4 class="header">{{user.name}}</h4>
+					<div class="card-action">
+						<a href="#">{{user.email}}</a>
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+							<p>{{user.description}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
 
+			<div class="divider"></div>
 
-	  <div class="section col s12">
-	    <h2 class="header">{{user.name}}</h2>
-	    <div>
-	      <div class="card-image">
-	        <img src="https://icon-icons.com/icons2/582/PNG/512/woman_icon-icons.com_55031.png" style="width: 200px;">
-	      </div>
-	      <div class="card-stacked">
-	        <div class="card-content">
-	          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	        </div>
-	        <div class="card-action">
-	          <a href="#">{{user.email}}</a>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-
-		  <div class="divider"></div>
-		  <div class="section">
-		    <h5>Section 2</h5>
-		    <p>Stuff</p>
-		  </div>
-
-<div class="data">Registration date : </div>
+			<!--div class="data">Registration date : </div>
 <div class="data">Number of posted recipe : </div>
-<div class="data">Number of commented recipe : </div>
+<div class="data">Number of commented recipe : </div!-->
+
+			<div id="btns-profile">
+				<div>
+					<a id="favorites" class="waves-effect waves-light btn-large">Recettes favorites</a>
+					<a id="owned" class="waves-effect waves-light btn-large">Recettes de {{user.name}}</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Edit profile-->
+<div *ngIf="section===2">
+	<div class="head-header lime lighten-5">
+		<h3 class="header brown-text text-lighten-1">Edit your profile</h3>
+	</div>
+	<div class="container">
+		<form class="col s8" [formGroup]='userdataForm' (ngSubmit)="ngOnSubmit()" novalidate>
+			<div class="row">
+				<div class="input-field col s8">
+					<i class="material-icons prefix">account_circle</i>
+					<input id="username" type="text" class="validate form-control" formControlName="username" value="{{user.name}}" disabled>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s8">
+
+	      <i class="material-icons prefix">mail_outline</i>
+					<input id="email" type="email" class="validate form-control" formControlName="email" value="{{user.email}}" required autofocus [ngClass]="{
+			 'is-invalid': (userdataForm.controls['email'].invalid && userdataForm.controls['email'].touched),
+			 'is-valid': userdataForm.controls['email'].touched}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s4">
+					<i class="material-icons prefix">lock_outline</i>
+					<input id="password" type="password" class="validate form-control" formControlName="password" required [ngClass]="{
+			 'is-invalid': (userdataForm.controls['password'].invalid && userdataForm.controls['password'].touched),
+			 'is-valid': userdataForm.controls['password'].touched}">
+					<label for="password">New password</label>
+				</div>
+				<div class="input-field col s4">
+					<input id="confirmPassword" type="password" class="validate form-control" formControlName="confirmPassword" required
+					[ngClass]="{
+			 'is-invalid': (userdataForm.controls['confirmPassword'].invalid && userdataForm.controls['confirmPassword'].touched),
+			 'is-valid': userdataForm.controls['confirmPassword'].touched}">
+					<label for="password">Confirm new password</label>
+				</div>
+			</div>
+
+			<div class="row">
+	        <div class="input-field col s8">
+	          <textarea id="textarea1" class="materialize-textarea" formControlName="description" value="{{user.description}}"></textarea>
+	          <label for="textarea1">Description</label>
+	        </div>
+	      </div>
+
+			<div class="row">
+				<div class="file-field input-field">
+					<div class="btn">
+						<span>New profile picture</span>
+						<input id="picture" #fileInput type="file" name="picture" class="validate form-control" accept="image/*"  (change)="addFile()"/>
+					</div>
+
+					<div class="file-path-wrapper col s6">
+						<input class="file-path validate" type="text" placeholder="Upload profile image : size max 300*300" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s4">
+					<button class="btn" type="submit"
+							[disabled]="userdataForm.invalid">Send</button>
+				</div>
+			</div>
+		</form>
+</div>
+</div>
 
 
-<div id="btns-profile">
-	<div id="favorites" class="buttons-profile">
-		<button type="button">Recettes favorites</button>
+
+
+
+<!--posted recipe-->
+<div *ngIf="section===3">
+	<div class="head-header lime lighten-5">
+		<h3 class="header brown-text text-lighten-1">My posted recipes</h3>
+	</div>
+	<div id="postedRecipes" class="results">
+		<div class="center-align red-text">
+			<span>Not any posted recipe.</span>
+		</div>
+
+		<div class="row content">
+			<div class="">
+				<div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipeList; index as i; first as isFirst;">
+					<div class="card action">
+						<div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
+							<img class="activator" src="../assets/images/nopicture.jpg">
+						</div>
+						<div class="divider"></div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">more<i class="material-icons right">more_vert</i></span>
+							<div class="rating">
+								<span class="star">avis</span>
+								<span class="recipeTime"><strong>Cooking time</strong> - 1H:20min</span>
+								<span class="recipeTime"><strong>Preparation time</strong> - 00H:25</span>
+							</div>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Steps<i class="material-icons right">close</i></span>
+							<p>{{item.steps}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<div id="owned" class="buttons-profile">
-		<button type="button">Recettes de {{user.name}}</button>
+
+</div>
+
+<!--favorites-->
+<div *ngIf="section===4">
+	<div class="head-header lime lighten-5">
+		<h3 class="header brown-text text-lighten-1">My favorites</h3>
+	</div>
+	<div id="favorites" class="results">
+		<div class="center-align red-text">
+			<span>Not any favorite recipe.</span>
+		</div>
+
+		<div class="row content">
+			<div class="">
+				<div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipeList; index as i; first as isFirst;">
+					<div class="card action">
+						<div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
+							<img class="activator" src="../assets/images/nopicture.jpg">
+						</div>
+						<div class="divider"></div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">more<i class="material-icons right">more_vert</i></span>
+							<div class="rating">
+								<span class="star">avis</span>
+								<span class="recipeTime"><strong>Preparation time</strong> - 00H:25</span>
+							</div>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Steps<i class="material-icons right">close</i></span>
+							<p>{{item.steps}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+<!--comments-->
+<div *ngIf="section===5">
+
+	<div class="head-header lime lighten-5">
+		<h3 class="header brown-text text-lighten-1">My posted comments</h3>
+	</div>
+	<div>
+		<img align="center" *ngIf="user.picture == null" src="../../assets/images/defaultProfile.png" style="width: 200px;">
+		<!--TODO change-->
+		<h4>AnnaChu	</h4>
+		<p>comments</p>
 	</div>
 </div>
 
-</div>
-</div>
+<!--sidebar-->
 
 <ul id="slide-out" class="side-nav fixed">
-	<li><div class="user-view" style="min-height: 300px;">
-	<div class="background center-align" >
-		<img *ngIf="user.picture != null" src="../../assets/profiles/{{user.picture}}">
-		<img *ngIf="user.picture == null" src="../../assets/images/defaultProfile.png">
-	</div>
-</div>
-<p class="center-align"><span class="teal-text"><span style="font-size:20px;">{{user.name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.email}}</span></p>
-</li>
-<li><div class="divider"></div></li>
-<li class="teal lighten-2 active" (click)="myPage()"><a href="#!"><i class="material-icons prefix">account_circle</i><span>My page</span></a></li>
-<li><div class="divider"></div></li>
-<li (click)="editInformations()"><a href="#!"><i class="material-icons left">create</i><span>Edit informations</span></a></li>
-<li><div class="divider"></div></li>
-		 <li (click)="postedRecipes()"><a href="#!"><i class="material-icons prefix">room_service</i>Posted recipes </a></li>
-		 <li><div class="divider"></div></li>
-		 <li (click)="favoritesRecipes()"><a href="#!"> <i class="material-icons prefix">star</i> Favorites recipes</a></li>
-		 <li><div class="divider"></div></li>
-		<li (click)="postedComments()"><a href="#!"> <i class="material-icons prefix">message</i> Posted comments</a></li>
-	 </ul>
-	 <a href="#" data-activates="slide-out" class="button-collapse"></a>
+	<li>
+		<div class="user-view" style="min-height: 300px;" align="center">
+			<div class="background center-align">
+				<img src="../../assets/images/fond.jpeg">
+			</div>
+			<img *ngIf="user.picture != null" src="../../assets/profiles/{{user.picture}}" style="width: 200px;">
+			<img align="center" *ngIf="user.picture == null" src="../../assets/images/defaultProfile.png" style="width: 200px;">
+		</div>
+		<p class="center-align"><span class="teal-text"><span style="font-size:20px;">{{user.name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.email}}</span>
+		</p>
+	</li>
+	<li>
+		<div class="divider"></div>
+	</li>
+	<li class="menu active" (click)="changeSection(1)"><a><i class="material-icons prefix">account_circle</i><span>My page</span></a></li>
+	<li>
+		<div class="divider"></div>
+	</li>
+	<li class="menu" (click)="changeSection(2)"><a><i class="material-icons left">create</i><span>Edit informations</span></a></li>
+	<li>
+		<div class="divider"></div>
+	</li>
+	<li class="menu" (click)="changeSection(3)"><a><i class="material-icons prefix">room_service</i>Posted recipes </a></li>
+	<li>
+		<div class="divider"></div>
+	</li>
+	<li class="menu" (click)="changeSection(4)"><a> <i class="material-icons prefix">star</i> Favorites recipes</a></li>
+	<li>
+		<div class="divider"></div>
+	</li>
+	<li class="menu" (click)="changeSection(5)"><a> <i class="material-icons prefix">message</i> Posted comments</a></li>
+</ul>
+<a href="#" data-activates="slide-out" class="button-collapse"></a>

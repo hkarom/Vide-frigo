@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./db');
 const ingredient = require('./ingredient');
+const recipes = require('./recipe');
 const passport = require('passport');
 const router = express.Router();
 const path = require('path');
@@ -10,6 +11,7 @@ const sizeOf = require('image-size');
 
 
 router.use(ingredient);
+router.use(recipes);
 
 
 router.post('/upload', function(req, res) {

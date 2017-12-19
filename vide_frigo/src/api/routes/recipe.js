@@ -48,18 +48,36 @@ router.get('/recipes/:userID', (req, res) => {
 	*		responses:
 	*		- description: recipes
 */
-router.post('/recipes/:userID', (req, res) => {
-		let values = [];
-		if(typeof req.body.nom_recette !== 'undefined'){
-		bd.query('INSERT INTO Recipe values ()',[req.params.userID], (err,result) => {
-			treatment(err,result,values,"success")
-		});
-	}
-	else{
-		values.push({'result' : 'error', 'msg' : 'Missing field'});
-		res.setHeader('Content-Type', 'application/json');
-		res.send(200, JSON.stringify(values));
-	}
+router.post('/recipes/:id_creator', (req, res) => {
+ingredient=req.body.ingredient;
+  var newRecipe = {
+	id_creator:req.params.id_creator,
+	name:req.body.name,
+	cooking_time:req.body.cooking_time,
+	preparation_time:req.body.preparation_time,
+	steps:req.body.steps,
+	category:req.body.category
+};
+			bd.query('INSERT INTO recipe (id_creator, name, cooking_time, preparation_time, steps, category) VALUES (?,?,?,?,?,?)',[req.params.id_creator,req.body.name,
+		req.body.cooking_time,req.body.preparation_time, req.body.steps,req.body.category], function(err, recipes) {
+			//if (err) throw err;
+			if(err){console.log("erreur dans insertion recipe");}
+			else {
+				newRecipe.id = recipes.insertId;
+
+				res.json({
+					recipe: newRecipe
+				});
+					bd.query('INSERT INTO recipe_ing(id_recipe, name_ing) VALUES (?,?)',[recipes.insertId,req.body.ingredient],function(err,result){
+						if(err){console.log("erreur dans insertion recipe_ing");}
+						else{
+							console.log("recing cool!!!!!!!!!!!");
+						}
+					})
+
+				console.log(newRecipe);
+			 }
+			});
 });
 
 /**
@@ -88,10 +106,9 @@ router.patch('/recipe/:id', (req, res) => {
 				if(err) throw err;
 				console.log(result);
 		})
-	}
+	});
 		//res.send(200, JSON.stringify(values));
-	}
-});
+
 
 /**
 	*@swagger
