@@ -1,3 +1,100 @@
-<p>
-  userinfo works!
-</p>
+<div id="navbarFixed">
+  <nav class="nav-extended white lighten-4">
+
+    <div class="nav-content">
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a class="active brown-text" (click)="section=1">{{recipeList.length}} posted recipes found</a></li>
+        <li class="tab"><a class="brown-text" (click)="section=2">{{favoriteList.length}} favorite recipes found</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+<div class="results">
+  <div class="collection">
+    <div class="user-view" style="min-height: 300px;" align="center">
+      <div class="background center-align">
+        <img src="../../assets/images/fond.jpeg">
+      </div>
+      <img *ngIf="user.picture != null" src="{{user.picture}}" style="width: 200px;">
+      <img align="center" *ngIf="user.picture == null" src="../../assets/images/defaultProfile.png" style="width: 200px;">
+    </div>
+    <div>
+      <span style="font-size:20px;">{{user.name}}</span>
+    </div>
+    <div>
+      <span>{{user.email}}</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="section===1" id="recipesSearch" class="recipes">
+  <div class="center-align red-text" *ngIf="recipeList.length == 0">
+    <span>No posted recipes found for {{user.name}}</span>
+  </div>
+
+  <div class="row content">
+    <div class="">
+      <div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipeList; index as i; first as isFirst;">
+        <div class="card action">
+          <div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
+            <img *ngIf="item.picture === null || item.picture === undefined" class="activator" src="../assets/images/nopicture.jpg">
+            <img *ngIf="item.picture != null && item.picture != undefined" class="activator" src="{{item.picture}}">
+          </div>
+          <div class="divider"></div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{item.name}}<i class="material-icons right">more_vert</i></span>
+            <div class="rating">
+
+              <span class="star">{{displayStar(calculMark(item.mark, item.nb_vote))}}</span>
+                <span class="recipeTime"><strong>Preparation time</strong> - {{item.preparation_time}}</span>
+
+            </div>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Steps<i class="material-icons right">close</i></span>
+            <p>{{item.steps}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div *ngIf="section===2"  id="favoritesSearch" class="recipes">
+  <div class="center-align red-text" *ngIf="favoriteList.length == 0">
+    <span>No favorite recipes found for {{user.name}}</span>
+  </div>
+
+  <div class="row content">
+    <div class="">
+      <div class="card-container col s6" style="max-width:500px;" *ngFor="let item of favoriteList; index as i; first as isFirst;">
+        <div class="card action">
+          <div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
+            <img *ngIf="item.picture === null || item.picture === undefined" class="activator" src="../assets/images/nopicture.jpg">
+            <img *ngIf="item.picture != null && item.picture != undefined" class="activator" src="{{item.picture}}">
+          </div>
+          <div class="divider"></div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">{{item.name}}<i class="material-icons right">more_vert</i></span>
+            <div class="rating">
+
+              <span class="star">{{displayStar(calculMark(item.mark, item.nb_vote))}}</span>
+                <span class="recipeTime"><strong>Preparation time</strong> - {{item.preparation_time}}</span>
+
+            </div>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Steps<i class="material-icons right">close</i></span>
+            <p>{{item.steps}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

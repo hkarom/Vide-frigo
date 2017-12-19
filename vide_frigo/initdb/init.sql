@@ -9,26 +9,26 @@ CREATE TABLE User (
   description VARCHAR(1000),
   photo VARCHAR(512),
 	UNIQUE (login)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE Ingredient (
   name varchar(50) NOT NULL PRIMARY KEY
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE Recipe (
   id bigint(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	id_creator bigint(20) NOT NULL,
+	name_creator varchar(50) NOT NULL,
   name varchar(100) NOT NULL,
   picture VARCHAR(512),
-  preparation_time time NOT NULL,
+  preparation_time varchar(50) NOT NULL,
   steps varchar(2000) NOT NULL,
   category enum('STARTER','DISH','DESSERT') NOT NULL,
 	mark float,
   nb_vote bigint(20),
-	FOREIGN KEY (id_creator) REFERENCES User(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+	FOREIGN KEY (name_creator) REFERENCES User(login)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE Comment (
@@ -39,7 +39,7 @@ CREATE TABLE Comment (
 	star float NOT NULL,
 	FOREIGN KEY (id_recipe) REFERENCES Recipe(id),
 	FOREIGN KEY (id_user) REFERENCES User(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE Recipe_Ing (
@@ -48,13 +48,13 @@ CREATE TABLE Recipe_Ing (
 	FOREIGN KEY (id_recipe) REFERENCES Recipe(id) ON DELETE CASCADE,
 	FOREIGN KEY (name_ing) REFERENCES Ingredient(name),
 	PRIMARY KEY (id_recipe, name_ing)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE Favorite (
-  id_user bigint(20),
+  id_user VARCHAR(50),
   id_recipe bigint(20),
-	FOREIGN KEY (id_user) REFERENCES User(id) ON DELETE CASCADE,
+	FOREIGN KEY (id_user) REFERENCES User(login) ON DELETE CASCADE,
 	FOREIGN KEY (id_recipe) REFERENCES Recipe(id),
 	PRIMARY KEY (id_user, id_recipe)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

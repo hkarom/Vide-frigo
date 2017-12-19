@@ -3,11 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { User } from '../objects/User';
+import { Recipe } from '../objects/Recipe';
 declare var jquery: any;
 declare var $: any;
 
 const userUrl = 'http://localhost:3000/auth/user/';
-
+const recipesUrl = 'http://localhost:3000/auth/recipes/';
+const favoritesUrl = 'http://localhost:3000/auth/favorites/';
+const commentsUrl = 'http://localhost:3000/auth/comments/';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +20,10 @@ const userUrl = 'http://localhost:3000/auth/user/';
 export class ProfileComponent implements OnInit {
 
   private userdataForm: FormGroup;
-  private input : FormData;
+  private input: FormData;
+  private favorites = [];
+  private recipes = [];
+  private comments = [];
 
   private user: User;
   private section = 1;
@@ -39,17 +45,17 @@ export class ProfileComponent implements OnInit {
       description: null
     });
 
-   }
+  }
 
   ngOnInit() {
 
-console.log(localStorage.getItem('user.picture'));
+    console.log(localStorage.getItem('user.picture'));
     this.user = new User(
       Number(localStorage.getItem('user.id')),
-  		localStorage.getItem('user.username'),
-  		localStorage.getItem('user.email'),
-  		localStorage.getItem('user.description'),
-  		localStorage.getItem('user.picture')
+      localStorage.getItem('user.username'),
+      localStorage.getItem('user.email'),
+      localStorage.getItem('user.description'),
+      localStorage.getItem('user.picture')
     )
 
     $(".button-collapse").sideNav({
@@ -60,13 +66,13 @@ console.log(localStorage.getItem('user.picture'));
 
   ngOnSubmit() {
     this.http.patch(userUrl + this.user.id, this.userdataForm.value)
-    .map((result: any) => {
+      .map((result: any) => {
         if (result.error)
           console.log(result.error);
         else {
-          if(this.input != null) {
-          this.loadPicture().subscribe((result: any) => {  });
-        }
+          if (this.input != null) {
+            this.loadPicture().subscribe((result: any) => { });
+          }
           this.changeSection(2);
         }
       }, err => {
@@ -85,42 +91,63 @@ console.log(localStorage.getItem('user.picture'));
 
 
   loadPicture() {
-      let headers = new HttpHeaders();
-      headers = headers.set('username',  localStorage.getItem('user.username'));
-      return this.http.post('http://localhost:3000/api/upload', this.input, {headers: headers}).map((data: any) => {
-        console.log(data);
-        localStorage.setItem('user.picture', data.picture);
-      }, err => { console.log('err'); });
+    let headers = new HttpHeaders();
+    headers = headers.set('username', localStorage.getItem('user.username'));
+    return this.http.post('http://localhost:3000/api/upload', this.input, { headers: headers }).map((data: any) => {
+      console.log(data);
+      localStorage.setItem('user.picture', data.picture);
+    }, err => { console.log('err'); });
   }
 
-  myPage() {
-
-  }
 
   changeSection(index) {
     let menuItem = this.el.nativeElement.querySelectorAll('.menu');
     this.section = index;
-    for(let i = 0; i< menuItem.length; i++) {
-      if(i === index-1) menuItem[i].classList.add('active');
+    for (let i = 0; i < menuItem.length; i++) {
+      if (i === index - 1) menuItem[i].classList.add('active');
       else menuItem[i].classList.remove('active');
     }
   }
 
 
-  editInformations() {
-
-  }
 
   postedRecipes() {
-
+    this.http.get<Recipe[]>(recipesUrl + this.user.id)
+      .map((result: any) => {
+        if (result.error)
+          console.log(result.error);
+        else {
+          this.recipes = result;
+        }
+      }, err => {
+        console.log(err);
+      });
   }
 
   favoritesRecipes() {
-
+    this.http.get<Recipe[]>(favoritesUrl + this.user.id)
+      .map((result: any) => {
+        if (result.error)
+          console.log(result.error);
+        else {
+          this.favorites = result;
+        }
+      }, err => {
+        console.log(err);
+      });
   }
 
   postedComments() {
-
+    this.http.get<Comment[]>(commentsUrl + this.user.id)
+      .map((result: any) => {
+        if (result.error)
+          console.log(result.error);
+        else {
+          this.comments = result;
+        }
+      }, err => {
+        console.log(err);
+      });
   }
 
 }

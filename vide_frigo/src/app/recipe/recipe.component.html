@@ -4,7 +4,8 @@
 
     <div class="card horizontal description">
       <div class="card-image">
-        <img src="../assets/images/nopicture.jpg">
+        <img *ngIf="recipe.picture === null || recipe.picture === undefined" src="../assets/images/nopicture.jpg">
+        <img *ngIf="recipe.picture != null && recipe.picture != undefined" src="{{recipe.picture}}">
       </div>
       <div class="card-stacked">
         <div class="card-content">
@@ -43,8 +44,9 @@
 
 
   <div *ngIf="section===1" id="steps" class="col s12">
-    <div style="margin-top:20px;">{{recipe.steps}}</div>
-
+    <div style="margin-top:20px;">
+      <p *ngFor="let step of stepsList">{{step}}</p>
+    </div>
   </div>
 
   <div *ngIf="section===2" id="comments" class="col s12">

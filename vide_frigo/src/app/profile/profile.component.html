@@ -126,18 +126,20 @@
 
 		<div class="row content">
 			<div class="">
-				<div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipeList; index as i; first as isFirst;">
+				<div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipes; index as i; first as isFirst;">
 					<div class="card action">
 						<div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
-							<img class="activator" src="../assets/images/nopicture.jpg">
+							<img *ngIf="item.picture === null || item.picture === undefined" class="activator" src="../assets/images/nopicture.jpg">
+							<img *ngIf="item.picture != null && item.picture != undefined" class="activator" src="{{item.picture}}">
 						</div>
 						<div class="divider"></div>
 						<div class="card-content">
-							<span class="card-title activator grey-text text-darken-4">more<i class="material-icons right">more_vert</i></span>
+							<span class="card-title activator grey-text text-darken-4">{{item.name}}<i class="material-icons right">more_vert</i></span>
 							<div class="rating">
-								<span class="star">avis</span>
-								<span class="recipeTime"><strong>Cooking time</strong> - 1H:20min</span>
-								<span class="recipeTime"><strong>Preparation time</strong> - 00H:25</span>
+
+								<span class="star">{{displayStar(calculMark(item.mark, item.nb_vote))}}</span>
+									<span class="recipeTime"><strong>Preparation time</strong> - {{item.preparation_time}}</span>
+
 							</div>
 						</div>
 						<div class="card-reveal">
@@ -165,17 +167,20 @@
 
 		<div class="row content">
 			<div class="">
-				<div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipeList; index as i; first as isFirst;">
+				<div class="card-container col s6" style="max-width:500px;" *ngFor="let item of favorites; index as i; first as isFirst;">
 					<div class="card action">
 						<div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
-							<img class="activator" src="../assets/images/nopicture.jpg">
+							<img *ngIf="item.picture === null || item.picture === undefined" class="activator" src="../assets/images/nopicture.jpg">
+							<img *ngIf="item.picture != null && item.picture != undefined" class="activator" src="{{item.picture}}">
 						</div>
 						<div class="divider"></div>
 						<div class="card-content">
-							<span class="card-title activator grey-text text-darken-4">more<i class="material-icons right">more_vert</i></span>
+							<span class="card-title activator grey-text text-darken-4">{{item.name}}<i class="material-icons right">more_vert</i></span>
 							<div class="rating">
-								<span class="star">avis</span>
-								<span class="recipeTime"><strong>Preparation time</strong> - 00H:25</span>
+
+								<span class="star">{{displayStar(calculMark(item.mark, item.nb_vote))}}</span>
+									<span class="recipeTime"><strong>Preparation time</strong> - {{item.preparation_time}}</span>
+
 							</div>
 						</div>
 						<div class="card-reveal">
@@ -198,10 +203,18 @@
 		<h3 class="header brown-text text-lighten-1">My posted comments</h3>
 	</div>
 	<div>
-		<img align="center" *ngIf="user.picture == null" src="../../assets/images/defaultProfile.png" style="width: 200px;">
-		<!--TODO change-->
-		<h4>AnnaChu	</h4>
-		<p>comments</p>
+		<p *ngIf="comments.length == 0">No comment posted yet.</p>
+		<ul *ngIf="comments.length > 0" class="">
+
+			<li class="collection-item" *ngFor="let item of comments; index as i">
+				<div>
+					<h5><a routerLink="/{{item.id_user}}">{{item.id_user}}</a></h5>
+					<span class="substar">{{displayStar(item.star)}}</span>
+					<p><i class="material-icons" style="margin-right:10px;">chat</i> {{item.message}}</p>
+				</div>
+				<div class="divider"></div>
+			</li>
+		</ul>
 	</div>
 </div>
 

@@ -1,53 +1,83 @@
-let express = require('express');
-let bd = require('./db');
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const db = require('./db');
+const router = express.Router();
 
-/*let router = express.Router();
-const saltRounds = 8;
+
+function checkUndefinedObject(object, fields) {
+  let ok = true;
+  for (const field in fields) {
+    if (object[fields[field]] === undefined)
+      ok = false;
+  }
+  return ok;
+}
 
 function sendError(res, reason) {
-	res.status(400).send({ error: true, reason: reason });
-	console.log(reason);
+  res.status(400).send({
+    error: true,
+    reason: reason
+  });
 }
 
 
-router.get('/user/:niveau', (req, res) => {
-	res.setHeader('Content-Type', 'application/json');
-		bd.query('SELECT * FROM User WHERE niveau = ? ',[req.params.niveau], (err,result) => {
-				if(err) throw err;
-				console.log(result);
-		})
-	}
-		//res.send(200, JSON.stringify(values));
-	}
-});
 
-
-router.patch('/user/:id', (req, res) => {
-	let iduser = req.params.id;
-	bcrypt.hash(req.body.password, saltRounds, (err, password) => {
-		if (!err) {
-				bd.query("UPDATE User SET name=?, password=?, mail=? WHERE id=? ",[req.body.name,password,req.body.email, iduser], (error, result) => {
-						if(error) throw error;
-						else{
-							let values = [];
-							treatment(err, res, values, "success");
-						}
+router.get('/user/:login', (req, res) => {
+	res.contentType('application/json');
+	db.query('SELECT email, description, photo FROM Project WHERE login=?', [req.params.login], (error, result) => {
+		if (error) {
+			sendError(res, 'Database error');
+		} else {
+			const  user = result[0];
+			if (user) {
+				res.send({
+					name: user.name,
+          email: user.email
+					description: user.description,
+					picture: user.photo
 				});
-				res.send({ error: false });
-		} else
-				res.send({ error: err });
+			} else
+				sendError(res, 'No user selected');
+		}
 	});
-});*/
-
-/*router.delete('/user/:id', (req, res) => {
-	let id = req.params.id;
-	bd.query("DELETE FROM User WHERE id=?",[id], (err,count) => {
-		let values = [];
-		treatment(err, res, values, "success");
-
-	})
 });
-*/
 
+router.patch('/user/:login', (req, res) => {
+  res.contentType('application/json');
+  if(req.body.newPassword) {
+  db.query("UPDATE User SET email=?, password=?, description=? WHERE login=? ", [req.body.email, createHash(req.body.newPassword), req.body.description, req.params.login], (err2, result) => {
+    if (err2) throw err2;
+    res.send({
+      error: false
+    });
+  });
+} else {
+  db.query("UPDATE User SET email=?, description=? WHERE login=? ", [req.body.email, req.body.description, req.params.login], (err2, result) => {
+    if (err2) throw err2;
+    res.send({
+      error: false
+    });
+  });
+}
+});
+
+
+router.delete('/user/:login', (req, res) => {
+  db.query('DELETE FROM User WHERE login = ?', [req.params.login], (error) => {
+    if (error)
+      sendError(res, 'Unable to query database');
+    else {
+      res.status(200).send({
+        error: false
+      });
+    }
+  });
+});
+
+
+
+var createHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+}
 
 module.exports = router;

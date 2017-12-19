@@ -58,6 +58,22 @@ router.get('/ingredients', (req, res) => {
 			}
 		})
 
+});
+
+router.get('/ingredients/:id', (req, res) => {
+	res.contentType('application/json');
+		db.query("SELECT name_ing FROM Recipe_Ing WHERE id_recipe = ?", [req.params.id], (err, result) => {
+			if (err) throw err;
+			else {
+				let ingredients = [];
+				for (let i = 0; i < result.length; i++) {
+					ingredients.push(
+						result[i]['name_ing']
+					);
+				}
+				res.status(200).send(ingredients);
+			}
+		})
 
 });
 

@@ -5,9 +5,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Recipe } from '../objects/Recipe';
 import { Comment } from '../objects/Comment';
 
-const ingredientsUrl = 'http://localhost:3000/ingredients/';
-const commentsUrl = 'http://localhost:3000/comments/';
-const recipeUrl = 'http://localhost:3000/recipe/';
+const ingredientsUrl = 'http://localhost:3000/api/ingredients/';
+const commentsUrl = 'http://localhost:3000/api/comments/';
+const recipeUrl = 'http://localhost:3000/api/recipe/';
 const MAX_STARS = 5;
 
 @Component({
@@ -20,11 +20,12 @@ export class RecipeComponent implements OnInit {
   private commentForm: FormGroup;
   private recipe: Recipe;
   private commentsList = [];
-  private ingredientsList = ['pomme', 'chocolat', 'fraise', 'poireau', 'courgette', 'sel'];
+  private ingredientsList = [];
   private section = 1;
   private userName = localStorage.getItem('user.username');
   private marks = [1,2,3,4,5];
   private commentMark = 0;
+  private stepsList = [];
 
   constructor(
     private http: HttpClient,
@@ -32,31 +33,38 @@ export class RecipeComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute
   ) {
-    /*this.route.queryParams.forEach(params => {
-      let recipeId = params.id;
-      this.http.get<Recipe>(recipeUrl + recipeId).map((response: any) => {
-        if (response) {
-          this.recipe = response;
-        }
-      });
-    });*/
-    let c1 = new Comment(-1,'Lulu',-1,"Very good !", 5);
-    let c2 = new Comment(-1,'chambo147852',-1,"Un commentaire très très très long tellement long que même l'écrire est long, d'ailleur on y trouve trois fois le mot long ce qui est beaucoup...", 3);
 
-    this.commentsList.push(c1,c2);
-
-    this.recipe = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
     this.commentForm = this.fb.group({
       message: [null, [Validators.required, Validators.minLength(8)]],
       mark: [null, [Validators.required]],
-      id_recipe: this.recipe.id,
       id_user: localStorage.getItem('user.id')
     });
   }
 
   ngOnInit() {
-    //this.loadIngredients();
-    //this.loadComments();
+    this.route.queryParams.forEach(params => {
+      let recipeId = params.recipe;
+      this.getRecipe(params.recipe).subscribe((response: any) => {
+        if (response) {
+          this.recipe = response;
+          this.stepsList = this.recipe.steps.split('|');
+        }
+      });
+      this.loadIngredients(params.recipe).subscribe((response: any) => {
+        this.ingredientsList = response;
+      });
+      this.loadComments(params.recipe).subscribe((response: any) => {
+        this.commentsList = response;
+      });
+    });
+  }
+
+  getRecipe(id) {
+    return this.http.get<Recipe>(recipeUrl + id).map((response: any) => {
+      if (response) {
+        return response;
+      }
+    });
   }
 
   displayStar(number) {
@@ -75,26 +83,28 @@ export class RecipeComponent implements OnInit {
 
   //calculMark()
 
-  loadIngredients() {
-    this.http.get(ingredientsUrl + this.recipe.id).map((response: any) => {
+  loadIngredients(id) {
+    return this.http.get(ingredientsUrl + id).map((response: any) => {
       if (response) {
-        this.ingredientsList = response;
+        return response;
       }
     });
   }
 
-  loadComments() {
-    this.http.get(commentsUrl + this.recipe.id).map((response: any) => {
+  loadComments(id) {
+  return this.http.get(commentsUrl + id).map((response: any) => {
       if (response) {
-        this.commentsList = response;
+        return response;
       }
     });
   }
 
   sendComment() {
-    this.http.post(commentsUrl + this.recipe.id, this.commentForm.value).map((response: any) => {
+    this.http.post(commentsUrl + this.recipe.id, this.commentForm.value).subscribe((response: any) => {
       if (response) {
-        this.loadComments();
+        this.loadComments(this.recipe.id).subscribe((res) => {
+          this.commentsList = res;
+        })
         alert('comment posted successfully');
       }
     });
