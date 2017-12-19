@@ -33,7 +33,7 @@
 
       <li *ngFor="let item of starsType" class="collection-item">
         <div><span class="star">{{displayStar(item[1])}}</span>
-          <input name="group1" type="radio" id="STAR{{item[1]}}" [checked]="mark == item[1]"/><label for="{{item[2]}}">{{item[0]}}</label></div>
+          <input name="group1" type="radio" id="STAR{{item[1]}}" [checked]="mark == item[1]" /><label for="{{item[2]}}">{{item[0]}}</label></div>
       </li>
     </ul>
   </div>
@@ -42,8 +42,13 @@
     <a><input type="time" name="usr_time" value="{{preparationTime}}"></a>
   </div>
 
+  <div class="_section" id="checkboxes">
+    <span *ngFor="let type of types; index as i">
+<input  type="checkbox" class="filled-in" checked/>
+<label class="white-text" for="filled-in-box"><strong>{{type[0]}}</strong></label>
+</span>
+  </div>
 </div>
-
 
 
 <div id="resultsSearch" class="results">
@@ -56,17 +61,15 @@
       <div class="card-container col s6" style="max-width:500px;" *ngFor="let item of recipeList; index as i; first as isFirst;">
         <div class="card action">
           <div class="card-image" (click)="loadRecipe(item)" [routerLink]="['/recipe',adapt(item.name)]" [queryParams]="{ recipe: item.id }">
-            <img class="activator" src="../assets/images/nopicture.jpg">
+            <img *ngIf="item.picture == null || item.picture == undefined || item.picture == ''" class="activator" src="../assets/images/nopicture.jpg">
+            <img *ngIf="item.picture != null && item.picture != undefined" class="activator" src="{{item.picture}}">
           </div>
           <div class="divider"></div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{item.name}}<i class="material-icons right">more_vert</i></span>
             <div class="rating">
-
               <span class="star">{{displayStar(calculMark(item.mark, item.nb_vote))}}</span>
-                <span class="recipeTime"><strong>Cooking time</strong> - {{item.cooking_time}}</span>
-                <span class="recipeTime"><strong>Preparation time</strong> - {{item.preparation_time}}</span>
-
+              <span class="recipeTime"><strong>Preparation time</strong> - {{item.preparation_time}}</span>
             </div>
           </div>
           <div class="card-reveal">
@@ -76,9 +79,5 @@
         </div>
       </div>
     </div>
-
-
-
-
   </div>
 </div>

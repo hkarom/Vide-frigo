@@ -37,7 +37,8 @@ module.exports = (passport) => {
           id: rows[0].id,
           username: rows[0].login,
           email: rows[0].email,
-          description: rows[0].description
+          description: rows[0].description,
+          picture: rows[0].photo
         };
         var payload = {
           login: req.body.username

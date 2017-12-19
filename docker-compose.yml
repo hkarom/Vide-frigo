@@ -11,17 +11,6 @@ services:
       MYSQL_DATABASE: vide_frigo
     ports:
       - "3316:3306"
-  peuplement: 
-    build: ./vide_frigo/initdb/peuplement_BD
-    image: vfrigo:peuplement
-    volumes: 
-      - ./vide_frigo/initdb/peuplement_BD:/peuplement_BD
-      - peuplement_BD/target
-    ports:
-      - "4567:4567"
-    depends_on:
-      - db
-    init: true
   server:
     build: ./vide_frigo
     image: vfrigo:vide_frigo

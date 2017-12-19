@@ -1,3 +1,57 @@
+div.head-header {
+	margin-top:2px;
+	padding-top:10px;
+padding-bottom:10px;
+margin-bottom:20px;
+}
+
+div.head-header h3 {
+	margin-left:20px;
+}
+
+#slide-out li {
+	cursor:pointer;
+}
+
+div.collection {
+  overflow: auto;
+  height: 100%;
+  border-style: none;
+}
+
+.card {
+  box-shadow: none;
+  border: solid 1px #DDDDDD;
+  cursor: pointer;
+  transition: background 0.5s;
+
+}
+
+.star {
+  font-size:150%;
+  color: gold;
+}
+
+.card-content {
+
+  padding-bottom: 30px;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card-image {
+  opacity: 1.0;
+  filter: alpha(opacity=100);
+}
+
+.card-image:hover {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+
 
 /*.identity{
 	margin-top:2%;

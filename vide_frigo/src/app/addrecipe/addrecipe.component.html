@@ -1,3 +1,70 @@
-<p>
-  addrecipe works!
-</p>
+
+ <div class="head-header lime lighten-5" align="center">
+	 <h3 class="header brown-text text-lighten-1">Add Recipe</h3>
+ </div>
+
+<div class="container row">
+	<form class="col s12"  [formGroup]="addrecipeForm" (submit)="ngOnSubmit()" novalidate>
+		<div class="row">
+			<div class="input-field col s6">
+				<!--i class="material-icons prefix">account_circle</i-->
+				<input id="name" type="text" class="validate form-control" formControlName="name" required autofocus [ngClass]="{
+					'is-invalid': (addrecipeForm.controls['name'].invalid && addrecipeForm.controls['name'].touched),
+					'is-valid': addrecipeForm.controls['name'].touched}">
+				<label for="name">Recipe's Name</label>
+			</div>
+      <div class=" col s6">
+        <label for="category">Category</label>
+      <select class="browser-default" formControlName="category">
+    <option value="" disabled selected>Choose type</option>
+    <option >STARTER</option>
+    <option >DISH</option>
+    <option >DESSERT</option>
+    </select>
+      </div>
+		</div>
+
+    <div class="row">
+      <div class="file-field input-field col s6">
+        <div class="btn">
+          <!--span>Image</span-->
+          <i class="large material-icons">add_a_photo</i>
+          <input id="picture" #fileInput type="file" name="picture" class="validate form-control" accept="image/*"  (change)="addFile()"/>
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" placeholder="Upload recipe image : size max 300*300" />
+        </div>
+      </div>
+
+      <div class="input-field col s6">
+          <label for="ingredient">Ingredients</label>
+          <input id="ingredient" class="form-control" type="text" formControlName="ingredient">
+      </div>
+
+
+    </div>
+
+    <div class="row">
+                <div class="input-field col s6">
+                  <label for="cooking_time">Cooking time</label>
+                    <input id="cooking_time" class="timepicker" type="text"  formControlName="cooking_time">
+                      </div>
+                    <div class="input-field col s6">
+                      <label for="preparation_time">Preparation time</label>
+                      <input id="preparation_time" class="timepicker" type="text"  formControlName="preparation_time">
+                    </div>
+                  </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="steps" class="materialize-textarea" formControlName="steps"></textarea>
+              <label for="Steps">Steps</label>
+            </div>
+          </div>
+
+		<div class="row">
+			<div class="input-field col s6">
+				<button class="btn" type="submit">Add recipe</button>
+			</div>
+		</div>
+	</form>
+</div>

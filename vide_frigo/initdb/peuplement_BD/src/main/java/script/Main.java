@@ -1,6 +1,10 @@
 package script;
 import src.source.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class Main {
@@ -30,13 +34,13 @@ public class Main {
 		try {
 		// create a mysql database connection
 			System.out.println("MyDriver");
-	      String myDriver = "com.mysql.jdbc.Driver";
+	      String myDriver = "org.mariadb.jdbc.Driver";
 	      System.out.println("MyURL");
-	      String myUrl = "jdbc:mysql://localhost/vide_frigo";
+	      String myUrl = "jdbc:mariadb://localhost:3306/vide_frigo";
 	      System.out.println("Class.forName");
 	      Class.forName(myDriver);
 	      System.out.println("Connection");
-	      Connection conn = DriverManager.getConnection(myUrl, "root", "");
+	      Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/DB?user=root&password=root");
 	      System.out.println("Recherche");
 	      ArrayList<Recipe>recipes = Recipe.search("tomate");
 	      for (Recipe r : recipes) {

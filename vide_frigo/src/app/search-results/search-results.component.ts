@@ -6,7 +6,7 @@ declare var jquery: any;
 declare var $: any;
 const MAX_STARS = 5;
 
-const recipesUrl = 'http://localhost:3000/recipes/';
+const recipesUrl = 'http://localhost:3000/api/recipes';
 
 @Component({
   selector: 'app-search-results',
@@ -30,27 +30,39 @@ export class SearchResultsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    let r1 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r2 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r3 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r4 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r5 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r6 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
-    let r7 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    //let r1 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
+    //let r2 = new Recipe(-1, 'admin', 'Tarte aux fraises', '', '45:00', 'Some steps', 'DESSERT', 10, 2);
 
-    this.recipeList.push(r1, r2, r3, r4, r5, r6, r7);
+    //this.recipeList.push(r1, r2);
+
+    this.route.queryParams.forEach(params => {
+      this.ingredientsList = params.ingredients;
+      this.preparationTime = params.pTime.replace(/m/g, ':');
+      this.mark = params.mark;
+      this.types = params.types;
+    });
+
+    if(this.ingredientsList === null || this.ingredientsList === undefined || this.ingredientsList.length == 0) {
+      this.loadAll().subscribe((value: any) => {
+        if(value) this.recipeList = value;
+      });
+    }
+    else {
+      this.loadRecipes().subscribe((value: any) => {
+        if(value) this.recipeList = value;
+      });
+    }
   }
 
   ngOnInit() {
-      this.route.queryParams.forEach(params => {
-        this.ingredientsList = params.ingredients;
-        this.preparationTime = params.pTime.replace(/m/g,':');
-        this.mark = params.mark;
-        this.types = params.types;
-      });
+
+
+
+  //
+
     $(document).ready(function() {
-    $('select').material_select();
-});
+      $('select').material_select();
+    });
 
     window.onscroll = function() { myFunction() };
     var navbar = document.getElementById("navbarFixed");
@@ -62,13 +74,50 @@ export class SearchResultsComponent implements OnInit {
         navbar.classList.remove("navbar-fixed");
       }
     }
+  }
+
+  loadRecipes() {
+    let params = new HttpParams();
+    /*const filteredTypes = this.types.filter(type => { type.toString().includes("true") })
+      console.log(filteredTypes);
+    filteredTypes.forEach(type => {
+      params = params.append('types[]', type[0].toString());
+    });*/
+    this.ingredientsList.forEach(ingredient => {
+      params = params.append('ingredients[]', ingredient);
+    });
+
+    console.log(params.get('ingredients[]'));
+  /*  if (this.preparationTime != '00:00')
+      params = params.append('preparation_time', this.preparationTime);
+
+      if (this.mark != -1)
+        params = params.append('mark', this.mark.toString());*/
+
+    return this.http.get<Recipe[]>(recipesUrl, { params: params }).map((response: any) => {
+      if (response) {
+        return response;
+      }
+    });
+  }
+
+  loadAll() {
+    return this.http.get<Recipe[]>(recipesUrl+"All").map((response: any) => {
+      if (response) {
+        return response;
+      }
+    });
+  }
+
+  loadRecipe(item) {
 
   }
 
+
   displayStar(number) {
     let stars = "";
-    for(let i = 0; i < MAX_STARS; i++) {
-      if(i < number) stars += '★';
+    for (let i = 0; i < MAX_STARS; i++) {
+      if (i < number) stars += '★';
       else stars += '☆';
     }
     return stars;
@@ -76,18 +125,9 @@ export class SearchResultsComponent implements OnInit {
 
 
   calculMark(e_mark, nb_vote) {
-    return Math.round(e_mark/nb_vote);
+    return Math.round(e_mark / nb_vote);
   }
 
-  loadRecipe(recipe) {
-    let params = new HttpParams();
-    //params = params.append('val', val);
-    this.http.get<Recipe[]>(recipesUrl, {params: params}).map((response: any) => {
-      if (response) {
-        this.recipeList = response;
-      }
-    });
-  }
 
   adapt(name) {
     return name.replace(/ /g, '-');
