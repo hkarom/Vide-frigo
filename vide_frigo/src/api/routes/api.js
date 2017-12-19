@@ -40,7 +40,7 @@ router.post('/upload', function(req, res) {
       filename = null;
     } else {
       fs.rename(file.path, filefullname, (err) => {
-        db.query("UPDATE User SET photo = ? WHERE login = ?", ['../../assets/profiles/'+filename, req.headers.username], function(err, result) {
+        db.query("UPDATE User SET photo = ? WHERE login = ?", ['../assets/profiles/'+filename, req.headers.username], function(err, result) {
           if (err) throw err;
         });
       });

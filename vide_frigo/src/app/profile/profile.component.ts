@@ -58,6 +58,8 @@ export class ProfileComponent implements OnInit {
       localStorage.getItem('user.picture')
     )
 
+    console.log(this.user.picture);
+
     $(".button-collapse").sideNav({
       menuWidth: 400,
       edge: 'right',

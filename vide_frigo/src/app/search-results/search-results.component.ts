@@ -42,7 +42,7 @@ export class SearchResultsComponent implements OnInit {
       this.types = params.types;
     });
 
-    if(this.ingredientsList == null || this.ingredientsList == undefined) {
+    if(this.ingredientsList === null || this.ingredientsList === undefined || this.ingredientsList.length == 0) {
       this.loadAll().subscribe((value: any) => {
         if(value) this.recipeList = value;
       });
