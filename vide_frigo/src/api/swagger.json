@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Yet Another Node.js Blogg Application API",
-    "description": "Yet Another Node.js Blogg Application API",
+    "title": "Vide-Frigo",
+    "description": "API de l'application Vide-Frigo",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -13,8 +13,20 @@
   "basePath": "/api",
   "tags": [
     {
-      "name": "Users",
-      "description": "API for users in the system"
+      "name": "comment",
+      "description": "Operation for comment"
+    },
+    {
+      "name": "ingredients",
+      "description": "Operation for ingredient"
+    },
+    {
+      "name": "favorite",
+      "description": "Operation for favorite recipe"
+    },
+    {
+      "name": "recipe",
+      "description": "Operation for recipe"
     }
   ],
   "schemes": [
@@ -27,20 +39,42 @@
     "application/json"
   ],
   "paths": {
-    "/users": {
+    "/comment/{userID}/{recipeID}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user making the comment",
+          "type": "string"
+        },{
+          "name": "recipeID",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
       "post": {
         "tags": [
-          "Users"
+          "comment"
         ],
-        "description": "Create new user in system",
+        "description": "Create new comment",
         "parameters": [
+
           {
-            "name": "user",
+            "name": "message",
             "in": "body",
-            "description": "User that we want to create",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
+            "description": "Message of comment",
+            "required": true,
+            "type": "String"
+          },
+          {
+            "name": "etoile",
+            "in": "body",
+            "description": "Mark for recipe",
+            "required": true,
+            "type": "int"
           }
         ],
         "produces": [
@@ -48,118 +82,310 @@
         ],
         "responses": {
           "200": {
-            "description": "New user is created",
+            "description": "New comment is created",
             "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get all users in system",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Users"
+              "result": "succes",
+              "data": "succes"
             }
           }
         }
       }
     },
-    "/users/{userId}": {
+    "/comment/{recipeID}": {
       "parameters": [
         {
-          "name": "userId",
+          "name": "recipeID",
           "in": "path",
           "required": true,
-          "description": "ID of user that we want to find",
+          "description": "ID of the recipe",
           "type": "string"
         }
       ],
       "get": {
         "tags": [
-          "Users"
+          "comment"
         ],
-        "summary": "Get user with given ID",
+        "description": "Get all comment of a recipe",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
-            "description": "User is found",
+            "description": "Succes",
             "schema": {
-              "$ref": "#/definitions/User"
+              "result": "succes",
+              "data": "SELECT * FROM avis WHERE id_recette = ?"
+            }
+          }
+        }
+    }
+  },
+    "/comment/{userID}/{recipeID}/{commentID}": {
+      "parameters": [
+        {
+          "name": "userID",
+          "in": "path",
+          "required": true,
+          "description": "ID of user who post the comment",
+          "type": "string"
+        },
+        {
+          "name": "recipeID",
+          "in": "path",
+          "required": true,
+          "description": "ID of the recipe",
+          "type": "string"
+        },
+        {
+          "name": "commentID",
+          "in": "path",
+          "required": true,
+          "description": "ID of the comment",
+          "type": "string"
+        }
+      ],
+      "patch": {
+        "tags": [
+          "comment"
+        ],
+        "description": "Patch the comment",
+        "parameters": [
+
+          {
+            "name": "message",
+            "in": "body",
+            "description": "Message of comment",
+            "required": true,
+            "type": "String"
+          },
+          {
+            "name": "etoile",
+            "in": "body",
+            "description": "Mark for recipe",
+            "required": true,
+            "type": "int"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Succes",
+            "schema": {
+              "result": "succes",
+              "data": "succes"
             }
           }
         }
       },
       "delete": {
-        "summary": "Delete user with given ID",
         "tags": [
-          "Users"
+          "comment"
         ],
-        "responses": {
+        "description": "Delete the comment",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
           "200": {
-            "description": "User is deleted",
+            "description": "Succes",
             "schema": {
-              "$ref": "#/definitions/User"
+              "result": "succes",
+              "data": "succes"
             }
           }
-        }
-      },
-      "put": {
-        "summary": "Update user with give ID",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "User with new values of properties",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User is updated",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "User": {
-      "required": [
-        "email",
-        "_id"
-      ],
-      "properties": {
-        "_id": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "email": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
         }
       }
     },
-    "Users": {
-      "type": "array",
-      "$ref": "#/definitions/User"
+    "/ingredients": {
+      "post": {
+        "tags": [
+          "ingredients"
+        ],
+        "descrition": "check ingredients use for research",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200": {
+            "descrition": "Succes"
+          },
+          "400": {
+            "descrition": "Fail because required parameters not set"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ingredients"
+        ],
+        "description": "Return all ingredients in database",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200": {
+            "descrition": "Al ingredients"
+          }
+        }
+      }
+    },
+    "/favorite/{userID}": {
+      "parameters": [
+        {
+          "name": "userID",
+          "in": "path",
+          "required": true,
+          "description": "ID of user we want the favorite",
+          "type": "int"
+        }
+      ],
+      "get": {
+        "tags": [
+          "favorite"
+        ],
+        "description":"return favorite recipes of the user",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200": {
+            "descrition": "Succes"
+          }
+        }
+      }
+    },
+    "/favorite/{userId}/{favID}": {
+      "parameters": [
+        {
+          "name": "userID",
+          "in": "path",
+          "required": true,
+          "description": "ID of user we want the favorite",
+          "type": "int"
+        },
+        {
+          "name": "favID",
+          "in": "path",
+          "required": true,
+          "description": "ID of the favorite recipe",
+          "type": "int"
+        }
+      ],
+      "get": {
+        "tags": [
+          "favorite"
+        ],
+        "description": "return a precise favorite recipe of the user",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200":{
+            "descrition":"succes"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "favorite"
+        ],
+        "description": "Delete the favorite recipe",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200":{
+            "descrition": "Success"
+          }
+        }
+      }
+    },
+    "/recipes/{userID}": {
+      "parameters": [
+        {
+          "name": "userID",
+          "in": "path",
+          "required": true,
+          "descrition": "user who create recipes",
+          "type": "int"
+        }
+      ],
+      "get": {
+        "tags": [
+          "recipe"
+        ],
+        "descrition": "Get all recipes created by the user",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200": {
+            "description": "Succes"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "recipe"
+        ],
+        "parameters": [
+          {
+            "name":"nom_recette",
+            "in":"body",
+            "required":true,
+            "type":"String"
+          }
+        ],
+        "description": "User create a new recipe",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/recipes/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in":"path",
+          "required":true,
+          "type":"int"
+        }
+      ],
+      "get":{
+        "tags":[
+          "recipe"
+        ],
+        "description":"Return a recipe",
+        "produces":[
+          "application/json"
+        ],
+        "response":{
+          "200":{
+            "description":"Success"
+            }
+          }
+      },
+      "patch":{
+        "tags":[
+          "recipe"
+        ],
+        "description":"Update a recipe",
+        "produces":[
+          "application/json"
+        ],
+        "response":{
+          "200":{
+            "description":"Success"
+          }
+        }
+      }
     }
   }
 }
